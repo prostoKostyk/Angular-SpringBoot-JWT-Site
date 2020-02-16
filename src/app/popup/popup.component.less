@@ -1,0 +1,32 @@
+.popup {
+    position: absolute;
+    margin-top: -25px;
+    width: 100%;
+}
+.popup__triangle {
+     width: 0;
+     height: 0;     
+     position: relative; 
+     left:35px;
+     border-left: 7px solid transparent;
+     border-right: 7px solid transparent;
+     border-bottom: 7px solid grey;
+     z-index: 3;
+}
+.popup__triangle::after {
+    content: ''; 
+    position: absolute;    
+    left:-7px;
+    top: 1px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid white;
+}
+.popup__content {
+    position: absolute;
+    border: solid grey 1px;
+    border-radius: 10px;
+    background:white; 
+    text-align: center;
+    padding: 0px 10px 0px 10px;
+}

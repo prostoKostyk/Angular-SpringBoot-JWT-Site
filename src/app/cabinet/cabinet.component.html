@@ -1,0 +1,18 @@
+<app-header></app-header>
+<div class = "cabinet">
+<ul class="cabinet__menu">
+<button class ="cabinet__menu-item" (click) = "showUser()" [ngClass]="{darkGreen: userVisible}">Обо мне</button>
+<button class ="cabinet__menu-item" (click) = "showCompanie()" [ngClass]="{darkGreen: companieVisible}">Моя компания</button>
+<button class ="cabinet__menu-item" (click) = "showProjects()" [ngClass]="{darkGreen: projectsVisible}">Мои проекты</button>
+</ul>
+<div *ngIf = "userVisible" >
+    <app-user></app-user>
+</div>
+<div *ngIf = "projectsVisible">
+    <app-user-companie></app-user-companie>
+</div>
+<div *ngIf = "companieVisible">
+    <app-user-projects></app-user-projects>
+</div>
+</div>
+<app-footer></app-footer>

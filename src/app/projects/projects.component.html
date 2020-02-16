@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class = "projects" *ngFor="let i = index; let project of projects;">
+<div *ngIf="project.approved">
+<div class = "projects__item" >
+<h3 class = "projects__header">{{project.name}}</h3>
+<div class = "projects__description">{{project.description}}</div>
+</div>
+<button class="projects__button" [routerLink]="['project', i]">Подробнее</button>
+</div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,62 @@
+<app-header></app-header>
+<div class="registration">
+  <form class="registration__form" [formGroup]="myForm" novalidate (ngSubmit)="submit()">
+    <div formGroupName="FIOForm">
+      <input class="registration__input" type="text" placeholder="Фамилия" formControlName="secondName" />
+      <div  *ngIf="myForm.get('FIOForm').controls['secondName'].invalid && myForm.get('FIOForm').controls['secondName'].touched">
+        <app-popup [error1] = "'Введите фамилию'"></app-popup>
+      </div>
+      <input class="registration__input" type="text" placeholder="Имя" formControlName="firstName" />
+      <div  *ngIf="myForm.get('FIOForm').controls['firstName'].invalid && myForm.get('FIOForm').controls['firstName'].touched">
+        <app-popup [error1] = "'Введите имя'"></app-popup>
+      </div>
+      <input class="registration__input" type="text" placeholder="Отчество" formControlName="lastName" />
+      <div  *ngIf="myForm.get('FIOForm').controls['lastName'].invalid && myForm.get('FIOForm').controls['lastName'].touched">
+        <app-popup [error1] = "'Введите отчество'"></app-popup>
+      </div>
+    </div>
+    <input class="registration__input" type="text" placeholder="email" formControlName="email" />
+    <div *ngIf="myForm.controls['email'].errors && myForm.controls['email'].touched">
+    <div *ngIf="myForm.controls['email'].errors.email">
+      <app-popup [error1] = "'Неправильный email'"></app-popup>
+    </div>
+    <div *ngIf="myForm.controls['email'].errors.required">
+      <app-popup [error1] = "'Введите email'"></app-popup>
+    </div>
+    </div>
+    <input class="registration__input" type="text" placeholder="Телефонный номер" formControlName="phone" />
+    <div *ngIf="myForm.controls['phone'].errors && myForm.controls['phone'].touched">
+    <div *ngIf="myForm.controls['phone'].errors.pattern">
+      <app-popup [error1] = "'Введить номер в формате 89051234567'"></app-popup>
+    </div>
+    <div *ngIf="myForm.controls['phone'].errors.required">
+      <app-popup [error1] = "'Введите телефонный номер'"></app-popup>
+    </div>
+    </div>
+    <div formGroupName="PasswordsForm">
+      <input minlength="8" class="registration__input" type="text" placeholder="Пароль" formControlName="password" />
+      <div *ngIf="myForm.get('PasswordsForm').controls['password'].errors && myForm.get('PasswordsForm').controls['password'].touched">
+       <div *ngIf = "myForm.get('PasswordsForm').controls['password'].errors.required">
+        <app-popup [error1] = "'Введите пароль'"></app-popup>
+      </div>
+      <div *ngIf = "myForm.get('PasswordsForm').controls['password'].errors.minlength">
+        <app-popup [error1] = "'Минимальная длинна пароля 8 символов'"></app-popup>
+      </div>
+      </div>
+      <div *ngIf="myForm.get('PasswordsForm').controls['password'].errors && myForm.get('PasswordsForm').controls['password'].errors.required && myForm.get('PasswordsForm').controls['password'].touched">
+        <app-popup [error1] = "'Введите пароль'"></app-popup>
+      </div>
+      <input class="registration__input" type="text" placeholder="Повторите пароль"  formControlName="passwordConfirm" />
+      <div *ngIf="myForm.get('PasswordsForm').controls['passwordConfirm'].errors && myForm.get('PasswordsForm').controls['passwordConfirm'].errors.match && myForm.get('PasswordsForm').controls['passwordConfirm'].touched">
+        <app-popup [error1] = "myForm.get('PasswordsForm').controls['passwordConfirm'].errors.match"></app-popup>
+      </div>
+      <div *ngIf="myForm.get('PasswordsForm').controls['passwordConfirm'].errors && myForm.get('PasswordsForm').controls['passwordConfirm'].errors.required && myForm.get('PasswordsForm').controls['passwordConfirm'].touched">
+        Введите подтверждение пароля
+      </div>
+    </div>
+    <button class="registration__button">Зарегистрироваться</button>
+    <p class="registration__message">Уже зарегистрированы? <a class="registration__create" href="/login">Войти</a>
+    </p>
+  </form>
+</div>
+<app-footer></app-footer>
