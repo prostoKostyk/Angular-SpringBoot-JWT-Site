@@ -1,1 +1,5 @@
-<p>user works!</p>
+<div class="content" *ngIf="users">
+    <p><b>ФИО:</b> {{users[CurentUserId].secondName}} {{users[CurentUserId].firstName}}  {{users[CurentUserId].lastName}}</p>
+    <p><b>Телефонный номер: </b>{{users[CurentUserId].phoneNumber}}</p>
+    <p><b>Email: </b>{{users[CurentUserId].email}}</p>
+</div>

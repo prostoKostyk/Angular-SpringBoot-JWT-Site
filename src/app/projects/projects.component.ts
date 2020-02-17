@@ -9,6 +9,7 @@ import { Project } from "../models/projects";
 })
 export class ProjectsComponent implements OnInit {
   projects;
+  id = 1;
 
   constructor(private httpService: HttpService) { }
 

@@ -1,1 +1,10 @@
-<p>user-projects works!</p>
+<div class="content" *ngIf="projects">
+    <div *ngFor="let i = index; let id of userProjectsId;">
+    <p><b>Название проекта: </b>{{projects[id].name}}</p>
+    <p><b>Стоимость проекта:</b> {{projects[id].cost}} рублей</p>
+    <p><b>Время на реализацию:</b> {{projects[id].timeLimitMonths}} месяцев</p>
+    <p><b>Цель проекта:</b> {{projects[id].target}}</p>
+    <p><b>Описание проекта:</b> {{projects[id].description}}</p>
+    <div class = "services__line"></div>
+</div>
+</div>
