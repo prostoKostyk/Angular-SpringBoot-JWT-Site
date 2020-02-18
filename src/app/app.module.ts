@@ -22,6 +22,7 @@ import { PopupComponent } from "./popup/popup.component";
 import { UserComponent } from "./cabinet/user/user.component";
 import { UserCompanieComponent } from "./cabinet/user-companie/user-companie.component";
 import { UserProjectsComponent } from "./cabinet/user-projects/user-projects.component";
+import { AngularYandexMapsModule } from "angular8-yandex-maps";
 // определение маршрутов
 const appRoutes: Routes = [
     { path: "", component: AboutComponent},
@@ -61,7 +62,8 @@ const appRoutes: Routes = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    AngularYandexMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
