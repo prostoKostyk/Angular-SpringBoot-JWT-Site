@@ -1,9 +1,9 @@
-.content {
-    text-indent: 1.5em;
+
+.project {
     width: 80%;
     margin-left: 10%;
+    font-family: "Roboto", sans-serif;  
     font-size: 18px;
-    height: 1000px;
     padding: 1%;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
@@ -16,3 +16,68 @@
     border: 1px solid gray;
     box-shadow: inset -1px 0 0 gray;
 }
+.user__button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    margin-left: 2%;
+    background: #98d361;
+    border: 0;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    width: 15%;
+    margin: 10px 5px 10px 5px;
+  }
+
+  .user__button:disabled {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  .project__header {    
+    padding: 4px 1px 4px 1px;
+  }
+
+  .project__item {
+    position: relative;
+    margin-left: 10%;
+  }
+  .project__view { 
+    position: relative;
+    padding: 4px 1px 4px 1px;
+    width: 80%;
+  }
+  .project__change {      
+    font-family: "Roboto", sans-serif;  
+    font-size: 18px;
+    outline: 0;
+    width: 10%;
+    border: 1px solid grey;
+    border-radius: 3px;
+  }
+
+  .project__textarea {
+    width: 80%;
+  }
+
+  .invisible {
+    display: none;
+}
+.project-add {
+  width: 80%;
+  margin-left: 10%;
+  font-family: "Roboto", sans-serif;  
+  font-size: 18px;
+  padding: 1%;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.new-project-button {
+  margin-left: 10%;
+}
+.project__change.ng-invalid {border:solid red 1px;}
+.project__change.ng-valid {border:solid #98d361 1px;}
+

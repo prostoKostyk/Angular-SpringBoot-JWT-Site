@@ -23,6 +23,7 @@ import { UserComponent } from "./cabinet/user/user.component";
 import { UserCompanieComponent } from "./cabinet/user-companie/user-companie.component";
 import { UserProjectsComponent } from "./cabinet/user-projects/user-projects.component";
 import { AngularYandexMapsModule } from "angular8-yandex-maps";
+import { InputWidthDirective } from "./directives/input-width.directive";
 // определение маршрутов
 const appRoutes: Routes = [
     { path: "", component: AboutComponent},
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
     PopupComponent,
     UserComponent,
     UserCompanieComponent,
-    UserProjectsComponent
+    UserProjectsComponent,
+    InputWidthDirective
   ],
   imports: [
     BrowserModule,
