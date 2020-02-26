@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpService } from "src/app/http.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { User } from "src/app/models/users";
 
 @Component({
   selector: "app-user",
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
   styleUrls: ["./user.component.less"]
 })
 export class UserComponent implements OnInit {
-  users;
+  users: Array<User>;
   CurentUserId = 0;
   userChangeMode = false;
   myForm: FormGroup;

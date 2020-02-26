@@ -1,11 +1,158 @@
+.projects {
+  width: 80%;  
+  margin: 0 auto;
+}
+
+.projects__button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  margin-left: 2%;
+  background: #98d361;
+  border: 0;
+  padding: 10px;
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+  width: 15%;
+  margin: 10px 5px 10px 5px;
+}
+
+.projects__button:disabled {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.projects__new {
+  font-family: "Roboto", sans-serif;  
+  font-size: 18px;
+  padding: 1%;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.projects__header {    
+  padding: 4px 1px 4px 1px;
+}
+
+.projects__item {
+  position: relative;
+  margin-left: 10%;
+}
+.project__users {
+  position: relative;
+  left: 2%;
+  background-color: #98d361;
+  color: white;
+  width: 30%;
+  height: 35px;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  padding-left: 1%;
+  outline: none;
+}
+.projects__users-string {
+  font-style: italic;
+}
+
+.projects__view { 
+  position: relative;
+  padding: 4px 1px 4px 1px;
+  width: 80%;
+}
+.projects__input {      
+  font-family: "Roboto", sans-serif;  
+  font-size: 18px;
+  outline: 0;
+  width: 10%;
+  border: 1px solid grey;
+  border-radius: 3px;
+}
+
+.projects__textarea {
+  width: 80%;
+}
+
+.project__filter {
+  margin: 20px 0;
+}
+
+.project__filter select {
+  position: absolute;
+  background-color: #98d361;
+  color: white;
+  width: 20%;
+  height: 44px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+
+.projects__search {
+  position: relative;
+  width: 30%;
+  margin: 20px 70%;  
+}
+
+.projects__search-input {
+  width: 95%;
+  height: 40px;
+  outline: none;    
+  font-family: "Roboto", sans-serif;  
+  font-size: 18px;
+  border: 1px solid grey;
+  border-right: none;
+}
+
+.projects__search-button {
+  background: #98d361;  
+  outline: none; 
+  border: 0;
+  height: 44px;
+  width: 44px;
+  position: absolute;
+  top: 0;
+  right: 0;  
+  cursor: pointer;
+}
+
+.projects__search-button:before {
+  content: "\f002";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
+
+.project__cancel-button {
+  position: relative;
+  top: 2px;
+  left: 5px;
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
 
 .project {
-    width: 80%;
-    margin-left: 10%;
     font-family: "Roboto", sans-serif;  
     font-size: 18px;
     padding: 1%;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.project__approved {
+  color: green;
+  position: relative;
+  left: 1%;
+}
+.project__approved-img {
+  float: left;
+  width: 20px;
+  height: 20px;
 }
 
 .services__line {
@@ -16,67 +163,12 @@
     border: 1px solid gray;
     box-shadow: inset -1px 0 0 gray;
 }
-.user__button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    margin-left: 2%;
-    background: #98d361;
-    border: 0;
-    padding: 10px;
-    color: #FFFFFF;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
-    width: 15%;
-    margin: 10px 5px 10px 5px;
-  }
-
-  .user__button:disabled {
-    background-color: rgba(0, 0, 0, 0.2);
-  }
-
-  .project__header {    
-    padding: 4px 1px 4px 1px;
-  }
-
-  .project__item {
-    position: relative;
-    margin-left: 10%;
-  }
-  .project__view { 
-    position: relative;
-    padding: 4px 1px 4px 1px;
-    width: 80%;
-  }
-  .project__change {      
-    font-family: "Roboto", sans-serif;  
-    font-size: 18px;
-    outline: 0;
-    width: 10%;
-    border: 1px solid grey;
-    border-radius: 3px;
-  }
-
-  .project__textarea {
-    width: 80%;
-  }
-
   .invisible {
     display: none;
 }
-.project-add {
-  width: 80%;
-  margin-left: 10%;
-  font-family: "Roboto", sans-serif;  
-  font-size: 18px;
-  padding: 1%;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
 
-.new-project-button {
-  margin-left: 10%;
+.relative {
+  position: relative;
 }
 .project__change.ng-invalid {border:solid red 1px;}
 .project__change.ng-valid {border:solid #98d361 1px;}

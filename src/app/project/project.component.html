@@ -1,9 +1,14 @@
 <app-header></app-header>
-<div class="content" *ngIf="projects">
-    <p><b>Название проекта: </b>{{projects[id].name}}</p>
-    <p><b>Стоимость проекта:</b> {{projects[id].cost}} рублей</p>
-    <p><b>Время на реализацию:</b> {{projects[id].timeLimitMonths}} месяцев</p>
-    <p><b>Цель проекта:</b> {{projects[id].target}}</p>
-    <p><b>Описание проекта:</b> {{projects[id].description}}</p>
+<div class="project">
+    <div class="project__content" *ngIf="projects">
+        <p><b>Название проекта: </b>{{projects[id].name}}</p>
+        <p><b>Стоимость проекта:</b> {{projects[id].cost}} рублей</p>
+        <p><b>Время на реализацию:</b> {{projects[id].timeLimitMonths}} месяцев</p>
+        <p><b>Цель проекта:</b> {{projects[id].target}}</p>
+        <div class="project__description">
+            <p class="project__description-header"><b>Описание проекта</b></p>
+            <p> {{projects[id].description}}</p>
+        </div>
+    </div>
 </div>
 <app-footer></app-footer>

@@ -20,10 +20,16 @@ import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { PopupComponent } from "./popup/popup.component";
 import { UserComponent } from "./cabinet/user/user.component";
-import { UserCompanieComponent } from "./cabinet/user-companie/user-companie.component";
+import { UserCompanyComponent } from "./cabinet/user-company/user-company.component";
 import { UserProjectsComponent } from "./cabinet/user-projects/user-projects.component";
 import { AngularYandexMapsModule } from "angular8-yandex-maps";
 import { InputWidthDirective } from "./directives/input-width.directive";
+import { SpinnerComponent } from "./spinner/spinner.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatProgressSpinnerModule, MatRadioModule, MatSliderModule} from "@angular/material";
+import { RestorePasswordComponent } from "./login/password-restore/restore-password/restore-password.component";
+import { CreatePasswordComponent } from "./login/password-restore/create-password/create-password.component";
+import { VerificationCodeComponent } from "./login/password-restore/verification-code/verification-code.component";
 // определение маршрутов
 const appRoutes: Routes = [
     { path: "", component: AboutComponent},
@@ -35,6 +41,9 @@ const appRoutes: Routes = [
     { path: "cabinet", component: CabinetComponent},
     { path: "projects/project/:id", component: ProjectComponent},
     { path: "popup", component: PopupComponent},
+    { path: "restore-password", component: RestorePasswordComponent},
+    { path: "create-password", component: CreatePasswordComponent},
+    { path: "verification-code", component: VerificationCodeComponent},
     { path: "**", component: NotFoundComponent }
 ];
 
@@ -54,9 +63,14 @@ const appRoutes: Routes = [
     ProjectComponent,
     PopupComponent,
     UserComponent,
-    UserCompanieComponent,
+    UserCompanyComponent,
     UserProjectsComponent,
-    InputWidthDirective
+    InputWidthDirective,
+    SpinnerComponent,
+    RestorePasswordComponent,
+    CreatePasswordComponent,
+    RestorePasswordComponent,
+    VerificationCodeComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +79,11 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
-    AngularYandexMapsModule
+    AngularYandexMapsModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    MatSliderModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

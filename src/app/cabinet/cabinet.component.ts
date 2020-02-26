@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class CabinetComponent implements OnInit {
   userVisible = true;
-  companieVisible = false;
+  companyVisible = false;
   projectsVisible = false;
   constructor() { }
 
@@ -16,18 +16,18 @@ export class CabinetComponent implements OnInit {
 
   showUser(): void {
     this.userVisible = true;
-    this.companieVisible = false;
+    this.companyVisible = false;
     this.projectsVisible = false;
   }
 
-  showCompanie(): void {
+  showcompany(): void {
     this.userVisible = false;
-    this.companieVisible = true;
+    this.companyVisible = true;
     this.projectsVisible = false;
   }
   showProjects(): void {
     this.userVisible = false;
-    this.companieVisible = false;
+    this.companyVisible = false;
     this.projectsVisible = true;
   }
 }
