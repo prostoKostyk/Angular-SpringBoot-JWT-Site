@@ -34,7 +34,7 @@
     </div>
     </div>
     <div formGroupName="PasswordsForm">
-      <input minlength="8" class="registration__input" type="text" placeholder="Пароль" formControlName="password" />
+      <input minlength="8" class="registration__input" type="password" placeholder="Пароль" formControlName="password" />
       <div *ngIf="myForm.get('PasswordsForm').controls['password'].errors && myForm.get('PasswordsForm').controls['password'].touched">
        <div *ngIf = "myForm.get('PasswordsForm').controls['password'].errors.required">
         <app-popup [error1] = "'Введите пароль'"></app-popup>
@@ -46,7 +46,7 @@
       <div *ngIf="myForm.get('PasswordsForm').controls['password'].errors && myForm.get('PasswordsForm').controls['password'].errors.required && myForm.get('PasswordsForm').controls['password'].touched">
         <app-popup [error1] = "'Введите пароль'"></app-popup>
       </div>
-      <input class="registration__input" type="text" placeholder="Повторите пароль"  formControlName="passwordConfirm" />
+      <input class="registration__input" type="password" placeholder="Повторите пароль"  formControlName="passwordConfirm" />
       <div *ngIf="myForm.get('PasswordsForm').controls['passwordConfirm'].errors && myForm.get('PasswordsForm').controls['passwordConfirm'].errors.match && myForm.get('PasswordsForm').controls['passwordConfirm'].touched">
         <app-popup [error1] = "myForm.get('PasswordsForm').controls['passwordConfirm'].errors.match"></app-popup>
       </div>

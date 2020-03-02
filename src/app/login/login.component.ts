@@ -11,7 +11,7 @@ import { HttpService } from "../http.service";
 export class LoginComponent implements OnInit {
   users;
   myForm: FormGroup;
-  message = "";
+  message: string;
   constructor(private httpService: HttpService) {
     this.myForm = new FormGroup({
       "login": new FormControl(),
