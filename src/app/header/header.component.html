@@ -5,7 +5,7 @@
             <a class="header__item" href="/services">Услуги</a>
             <a class="header__item" href="/projects">Проекты</a>
             <a class="header__item" href="/contacts">Контакты</a>
-            <a class="header__item" href="/login">Вход</a>
-            <a class="header__item" href="/cabinet">Кабинет</a>
+            <a *ngIf = "!isLoggedIn" class="header__item" href="/login">Вход</a>
+            <a *ngIf = "isLoggedIn" class="header__item" href="/cabinet">Кабинет</a>
         </div>
 </header>

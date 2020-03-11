@@ -3,10 +3,10 @@
         <button class="projects__button" (click)="addMode = !addMode">Новый проект</button>
     </div>
     <div *ngIf="addMode" class="projects__new">
-        <form [formGroup]="myForm" novalidate>
+        <form [formGroup]="form" novalidate>
             <p><b class="projects__header">Название проекта: </b>
                 <div class="projects__item">
-                    <input class="projects__input" setWidth={{myForm.value.name}} formControlName="name" />
+                    <input class="projects__input" setWidth={{form.value.name}} formControlName="name" />
                 </div>
                 <p><b class="projects__header">Стоимость проекта:</b>
                     <div class="projects__item">
@@ -15,32 +15,38 @@
                     </div>
                     <p><b class="projects__header">Время на реализацию:</b>
                         <div class="projects__item">
-                            <input type="number" class="projects__input" formControlName="timeLimitMonths" />
+                            <input type="number" class="projects__input" formControlName="time_limit_months" />
                             месяцев
                         </div>
                         <p><b class="projects__header">Цель проекта:</b>
                             <div class="projects__item">
                                 <textarea class="projects__input projects__textarea"
-                                    rows={{myForm.value.target.length*0.02}} formControlName="target"> </textarea>
+                                maxlength=150 formControlName="target"> </textarea>
                             </div>
                             <p><b class="projects__header">Описание проекта:</b>
                                 <div class="projects__item">
                                     <textarea class="projects__input projects__textarea"
-                                        rows={{myForm.value.description.length*0.02}}
+                                    maxlength=450
+                                        rows={{form.value.description.length*0.02}}
                                         formControlName="description"></textarea>
                                 </div>
         </form>
         <p><b class="projects__header">Добавить участников проекта: </b>
-            <select (change)="addUserToProject()" [(ngModel)]="addUserValue" class="project__users">
-                <option *ngFor="let user of users;" value="{{user.secondName}} {{user.firstName}} {{user.lastName}}">
-                    {{user.secondName}} {{user.firstName}} {{user.lastName}}
+            <select [(ngModel)]="addUserValue" class="project__users">
+                <option *ngFor="let user of users.content;" value="{{user.id}}">
+                    {{user.second_name}} {{user.first_name}} {{user.last_name}}
                 </option>
             </select>
+            <button class="projects__button left-50" (click)="addUserToProject()">Добавить</button>
             <p>
-               <div class = "projects__users-string">Участники проекта: {{usersToProjectString}}</div>
-            <p><button class="projects__button" [disabled]="myForm.invalid"
-                    (click)="addProject(myForm.value.name, myForm.value.cost, myForm.value.timeLimitMonths, myForm.value.target, myForm.value.description)">Добавить
-                    проект</button>
+                <div class="projects__users-string">Участники проекта:
+                    <div *ngFor="let userToProject of usersToProject">
+                        {{userToProject.name}} <img (click)="removeUser(userToProject.id)" class="project__cancel-img"
+                            src="/assets/images/cancel_black.png">
+                    </div>
+                </div>
+                <p><button class="projects__button" [disabled]="form.invalid" (click)="addProject()">Добавить
+                        проект</button>
                     <button class="projects__button" (click)="addMode = !addMode">Назад</button></p>
     </div>
     <div class="project__filter">
@@ -55,77 +61,92 @@
         <button class="projects__search-button" (click)="search()"></button>
         <div *ngIf="searchMessage">
             <div>
-                {{searchMessage}}<img class="project__cancel-button" src="/assets/images/cancel.png" (click)="cancelSearch()">
+                {{searchMessage}}<img class="project__cancel-button" src="/assets/images/cancel.png"
+                    (click)="cancelSearch()">
             </div>
         </div>
     </div>
-    <div class="project" *ngIf="projects">
-        <div *ngFor="let i = index; let project of showingProjects;">
-            <div *ngIf="project.approved === !showNotApproved || project.approved === showApproved">
-                <form [formGroup]="myForm" novalidate>
-                    <img class="project__approved-img" src={{getProjectStatus(i).image}}>
-                    <div class="project__approved">{{getProjectStatus(i).status}}</div>
-                    <p><b class="projects__header">Название проекта: </b>
-                        <div class="projects__item">
-                            <div class="projects__view" [ngClass]="{invisible: projectChangeId == i}">
-                                {{project.name}}
-                            </div>
-                            <div [ngClass]="{invisible: projectChangeId != i}">
-                                <input class="projects__input" setWidth={{myForm.value.name}} formControlName="name" />
-                            </div>
+    <div class="project" *ngIf="user && !user.projects[0]"> У вас пока что нет проектов, добавьте новый</div>
+    <div *ngIf="showingProjects && users">
+        <div class="project" *ngIf="showingProjects.length > 0">
+            <div *ngFor="let i = index; let project of showingProjects;">
+                <div *ngIf="project.approved === !showNotApproved || project.approved === showApproved">
+                    <form [formGroup]="form" novalidate>
+                        <div *ngIf="getProjectStatus(project.id)">
+                            <img class="project__approved-img" src="/assets/images/ok.png">
+                            <div class="project__approved">Одобрен</div>
                         </div>
-                        <p><b class="projects__header">Стоимость проекта:</b>
+                        <div *ngIf="!getProjectStatus(project.id)">
+                            <img class="project__approved-img" src="/assets/images/load.png">
+                            <div class="project__approved">На расмотрении</div>
+                        </div>
+                        <p><b class="projects__header">Название проекта: </b>
                             <div class="projects__item">
-                                <div class="projects__view" [ngClass]="{invisible: projectChangeId == i}">
-                                    {{project.cost}} рублей
+                                <div class="projects__view" [ngClass]="{invisible: projectChangeId == project.id}">
+                                    {{project.name}}
                                 </div>
-                                <div [ngClass]="{invisible: projectChangeId != i}">
-                                    <input type="number" class="projects__input" formControlName="cost" />
-                                    рублей
+                                <div [ngClass]="{invisible: projectChangeId != project.id}">
+                                    <input class="projects__input" setWidth={{form.value.name}}
+                                        formControlName="name" />
                                 </div>
                             </div>
-                            <p><b class="projects__header">Время на реализацию:</b>
+                            <p><b class="projects__header">Стоимость проекта:</b>
                                 <div class="projects__item">
-                                    <div class="projects__view" [ngClass]="{invisible: projectChangeId == i}">
-                                        {{project.timeLimitMonths}} месяцев
+                                    <div class="projects__view" [ngClass]="{invisible: projectChangeId == project.id}">
+                                        {{project.cost}} рублей
                                     </div>
-                                    <div [ngClass]="{invisible: projectChangeId != i}">
-                                        <input type="number" class="projects__input"
-                                            formControlName="timeLimitMonths" />
-                                        месяцев
+                                    <div [ngClass]="{invisible: projectChangeId != project.id}">
+                                        <input type="number" class="projects__input" formControlName="cost" />
+                                        рублей
                                     </div>
                                 </div>
-                                <p><b class="projects__header">Цель проекта:</b>
+                                <p><b class="projects__header">Время на реализацию:</b>
                                     <div class="projects__item">
-                                        <div class="projects__view" [ngClass]="{invisible: projectChangeId == i}">
-                                            {{project.target}}
+                                        <div class="projects__view"
+                                            [ngClass]="{invisible: projectChangeId == project.id}">
+                                            {{project.time_limit_months}} месяцев
                                         </div>
-                                        <div [ngClass]="{invisible: projectChangeId != i}">
-                                            <textarea class="projects__input projects__textarea"
-                                                rows={{myForm.value.target.length*0.02}}
-                                                formControlName="target"> </textarea>
+                                        <div [ngClass]="{invisible: projectChangeId != project.id}">
+                                            <input type="number" class="projects__input"
+                                                formControlName="time_limit_months" />
+                                            месяцев
                                         </div>
                                     </div>
-                                    <p><b class="projects__header">Описание проекта:</b>
+                                    <p><b class="projects__header">Цель проекта:</b>
                                         <div class="projects__item">
-                                            <div class="projects__view" [ngClass]="{invisible: projectChangeId == i}">
-                                                {{project.description}}
+                                            <div class="projects__view"
+                                                [ngClass]="{invisible: projectChangeId == project.id}">
+                                                {{project.target}}
                                             </div>
-                                            <div [ngClass]="{invisible: projectChangeId != i}">
-                                                <textarea class="projects__input projects__textarea"
-                                                    rows={{myForm.value.description.length*0.02}}
-                                                    formControlName="description"> </textarea>
+                                            <div [ngClass]="{invisible: projectChangeId != project.id}">
+                                                <textarea class="projects__input projects__textarea" maxlength=150
+                                                    formControlName="target"> </textarea>
                                             </div>
                                         </div>
-                </form>
-                <div *ngIf="!project.approved">
-                    <button [ngClass]="{invisible: projectChangeId == i}" class="projects__button"
-                        (click)="change(i)">Редактировать</button>
-                    <button [ngClass]="{invisible: projectChangeId != i}" class="projects__button"
-                        [disabled]="myForm.invalid"
-                        (click)="save(myForm.value.name, myForm.value.cost, myForm.value.timeLimitMonths, myForm.value.target, myForm.value.description)">Сохранить</button>
+                                        <p><b class="projects__header">Описание проекта:</b>
+                                            <div class="projects__item">
+                                                <div class="projects__view"
+                                                    [ngClass]="{invisible: projectChangeId == project.id}">
+                                                    {{project.description}}
+                                                </div>
+                                                <div [ngClass]="{invisible: projectChangeId != project.id}">
+                                                    <textarea class="projects__input projects__textarea" maxlength=450
+                                                        formControlName="description"> </textarea>
+                                                </div>
+                                            </div>
+                                            <p></p>
+                                            <div class="projects__users-string">Участники проекта:
+                                                {{getUsersInProject(project.id)}}
+                                            </div>
+                    </form>
+                    <div *ngIf="!project.approved">
+                        <button [ngClass]="{invisible: projectChangeMode}" class="projects__button"
+                            (click)="change(project.id)">Редактировать</button>
+                        <button [ngClass]="{invisible: !projectChangeMode}" class="projects__button"
+                            [disabled]="form.invalid" (click)="save(project.id)">Сохранить</button>
+                    </div>
+                    <div class="services__line"></div>
                 </div>
-                <div class="services__line"></div>
             </div>
         </div>
     </div>

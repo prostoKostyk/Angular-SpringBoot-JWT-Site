@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UserService } from "../_services/user.service";
 
 @Component({
   selector: "app-cabinet",
@@ -9,7 +10,7 @@ export class CabinetComponent implements OnInit {
   userVisible = true;
   companyVisible = false;
   projectsVisible = false;
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }

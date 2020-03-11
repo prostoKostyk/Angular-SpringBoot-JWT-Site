@@ -1,17 +1,17 @@
 <div class="login">
-  <app-header></app-header>
   <div class="login__window">
-    <form [formGroup]="myForm" class="login__form">
-      <input class="login__input" type="text" placeholder="Логин" formControlName="login" />
-      <input class="login__input" type="password" placeholder="Пароль" formControlName="password" />
-      <div class = "login__mistake" *ngIf = "message" >
-        <app-popup [error1]="message"></app-popup>
+    <form class="login__form" name="form" #f="ngForm" novalidate>
+      <input class="login__input" type="text" placeholder="Логин" name="username" [(ngModel)]="form.username" required
+        #username="ngModel" />
+      <input class="login__input" type="password" placeholder="Пароль" name="password" [(ngModel)]="form.password"
+        required minlength="6" #password="ngModel" />
+      <div class="login__mistake" *ngIf="f.submitted && isLoginFailed">
+        <app-popup [error1]="errorMessage"></app-popup>
       </div>
-      <button class="login__button" (click)="login(myForm.value.login, myForm.value.password)">Войти</button>
+      <button class="login__button"  (click)="login()">Войти</button>
       <p class="login__message">Не зарегистрированы? <a class="login__create" href="/registration">Создать аккаунт</a>
         <p class="login__message">Забыли пароль? <a class="login__create" href="/restore-password"> Воcстановить</a>
         </p>
     </form>
   </div>
 </div>
-<app-footer></app-footer>

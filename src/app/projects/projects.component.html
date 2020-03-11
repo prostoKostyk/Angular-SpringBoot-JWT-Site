@@ -1,29 +1,36 @@
-<app-header></app-header>
 <div class="main">
     <div class="projects">
-        <div class = "projects__up">
-        <select class="project__sorting" (change)="sorting()" [(ngModel)]="sortingValue">
-            <option value="1">Сортировка по названию</option>
-            <option value="2">Сортировка по цене </option>
-            <option value="3">Сортировка по лимиту времени</option>
-        </select>
-        <div class="projects__search">
-            <input class="projects__search-input" [(ngModel)]="searchWord" placeholder=" Введите название проекта...">
-            <button class="projects__search-button" (click)="search()"></button>
-            <div *ngIf="searchMessage">
-                <div>
-                    {{searchMessage}}<img class="project__cancel-button" src="/assets/images/cancel.png"
-                        (click)="cancelSearch()">
+        <div class="projects__up">
+            <select class="project__sorting" (change)="sorting()" [(ngModel)]="sortingValue">
+                <option value="1">Сортировка по названию</option>
+                <option value="2">Сортировка по цене </option>
+                <option value="3">Сортировка по лимиту времени</option>
+            </select>
+            <div *ngIf="userAdmin">
+                <select class="project__sorting left-5" (change)="onlyNotApprovedChange()" [(ngModel)]="onlyNotApproved">
+                    <option value="1">Все проекты</option>
+                    <option value="2">Только одобренные проекты </option>
+                    <option value="3">Только проекты на рассмотрении</option>
+                </select>
+            </div>
+            <div class="projects__search">
+                <input class="projects__search-input" [(ngModel)]="searchWord"
+                    placeholder=" Введите название проекта...">
+                <button class="projects__search-button" (click)="search()"></button>
+                <div *ngIf="searchMessage">
+                    <div>
+                        {{searchMessage}}<img class="project__cancel-button" src="/assets/images/cancel.png"
+                            (click)="cancelSearch()">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <div *ngFor="let i = index; let project of showingProjects;">
-            <div *ngIf="project.approved">
-                <div class="projects__item" [routerLink]="['project', i]">{{project.name}}
+            <div *ngIf="project.approved || userAdmin">
+                <div class="projects__item" [ngClass]="{'left-yellow': !project.approved}"
+                    [routerLink]="['project', project.id]">{{project.name}}
                 </div>
             </div>
         </div>
     </div>
 </div>
-<app-footer></app-footer>

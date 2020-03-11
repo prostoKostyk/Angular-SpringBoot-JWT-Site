@@ -7,7 +7,9 @@
     padding: 1%;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
-
+.user__buttons {
+  margin-left: 3%;
+}
 .user__button {
     font-family: "Roboto", sans-serif;
     text-transform: uppercase;
@@ -33,21 +35,28 @@
     margin-left: 5%;
   }
   .user__header {    
+    position: relative;
     padding: 4px 1px 4px 1px;
     float: left;
   }
 
-  .user__view {    
+  .user__view {  
+    position: relative;
     padding: 4px 4px 4px 4px;
+    left: 1%;
   }
-  .user__change {      
+
+  .user__change{
+    position: relative;
+    left: 1%;
+  }
+  .user__change-field {      
     padding: 3px 4px 3px 4px;
     font-family: "Roboto", sans-serif;  
     font-size: 18px;
     outline: 0;
     border: 1px solid grey;
     border-radius: 3px;
-    margin-left: 1px;
   }
 
   .invisible {
@@ -57,7 +66,6 @@
     color: red;
     font-size: 13px;
   }
-  
-  .user__change.ng-invalid {border:solid red 1px;}
-  .user__change.ng-valid {border:solid #98d361 1px;}
+  .user__change-field.ng-invalid {border:solid red 1px;}
+  .user__change-field.ng-valid {border:solid #98d361 1px;}
 

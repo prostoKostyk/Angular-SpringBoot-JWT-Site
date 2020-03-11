@@ -20,9 +20,10 @@ export class HttpService {
                     description: project.description,
                     timeLimitMonths: project.timeLimitMonths,
                     cost: project.cost,
-                    approved: project.approved };
+                    approved: project.approved
+                };
                 return obj;
-              });
+            });
         }));
     }
     getUsers(): Observable<User[]> {
@@ -32,15 +33,16 @@ export class HttpService {
             return users.map(function f(user: User): object {
                 const obj: object = {
                     id: user.id,
-                    firstName: user.firstName,
+                    first_name: user.first_name,
                     secondName: user.secondName,
                     lastName: user.lastName,
-                    phoneNumber: user.phoneNumber,
+                    phone_number: user.phone_number,
                     email: user.email,
                     password: user.password,
-                    userType: user.userType};
+                    userType: user.userType
+                };
                 return obj;
-              });
+            });
         }));
     }
-    }
+}

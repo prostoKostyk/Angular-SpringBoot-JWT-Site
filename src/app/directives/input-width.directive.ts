@@ -11,7 +11,7 @@ export class InputWidthDirective {
   if (this.word.length < 2) {
     this.setWidth(15);
    } else {
-   this.setWidth(this.word.length * 10.5);
+   this.setWidth(this.word.length * 10.8);
    }
  }
 

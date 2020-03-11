@@ -1,55 +1,79 @@
-<div class="user" *ngIf="users">
-    <div>
-        <p></p><b class="user__header">ФИО:</b>
-    </div>
-    <form [formGroup]="myForm" novalidate>
+<div class="user">
+    <form [formGroup]="form" name="form" #f="ngForm" *ngIf="user" novalidate>
         <div class="user__item">
-            <div class="user__view" [ngClass]="{invisible: userChangeMode}">
-                {{users[CurentUserId].secondName}} {{users[CurentUserId].firstName}} {{users[CurentUserId].lastName}}
+            <div>
+                <p></p><b class="user__header">Логин:</b>
             </div>
-            <div formGroupName="FIOForm" [ngClass]="{invisible: !userChangeMode}">
-                <input class="user__change" setWidth={{myForm.value.FIOForm.secondName}} formControlName="secondName" />
-                <input class="user__change" setWidth={{myForm.value.FIOForm.firstName}} formControlName="firstName" />
-                <input class="user__change" setWidth={{myForm.value.FIOForm.lastName}} formControlName="lastName" />
-                <div class="user__error" *ngIf="myForm.get('FIOForm').controls['secondName'].invalid">Введите фамилию
-                </div>
-                <div class="user__error" *ngIf="myForm.get('FIOForm').controls['firstName'].invalid">Введите имя</div>
-                <div class="user__error" *ngIf="myForm.get('FIOForm').controls['lastName'].invalid">Введите отчество
-                </div>
+            <div class="user__view" [ngClass]="{invisible: false}">{{user.username}}
             </div>
-
+            <div [ngClass]="{invisible: true}">
+                <input class="user__change" setWidth={{user.username}} name="username"
+                    formControlName="username" />
+            </div>
         </div>
-        <p><b class="user__header">Телефонный номер: </b>
-            <div class="user__item">
-                <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{users[CurentUserId].phoneNumber}}
+        <div class="user__item">
+            <div>
+                <p></p><b class="user__header">ФИО:</b>
+            </div>
+            <div class="user__view" [ngClass]="{invisible: userChangeMode}">
+                {{user.second_name}} {{user.first_name}} {{user.last_name}}
+            </div>
+            <div class = "user__change" [ngClass]="{invisible: !userChangeMode}">
+                <input class="user__change-field" setWidth={{form.value.second_name}}
+                    formControlName="second_name" />
+                <input class="user__change-field" setWidth={{form.value.first_name}}
+                    formControlName="first_name" />
+                <input class="user__change-field" setWidth={{form.value.last_name}}
+                    formControlName="last_name" />
+                <div class="user__error" *ngIf="form.controls['second_name'].invalid">Введите фамилию
                 </div>
-                <div [ngClass]="{invisible: !userChangeMode}">
-                    <input class="user__change" setWidth={{users[CurentUserId].phoneNumber}} formControlName="phone" />
-                    <div *ngIf="myForm.controls['phone'].errors">
-                        <div class="user__error" *ngIf="myForm.controls['phone'].errors.pattern">Введить номер в формате
-                            89051234567</div>
-                        <div class="user__error" *ngIf="myForm.controls['phone'].errors.required">Введите телефонный
-                            номер</div>
+                <div class="user__error" *ngIf="form.controls['first_name'].invalid">Введите имя</div>
+                <div class="user__error" *ngIf="form.controls['last_name'].invalid">Введите отчество
+                </div>
+            </div>
+        </div>
+        <div class="user__item">
+            <div>
+                <p></p><b class="user__header">Телефонный номер:</b>
+            </div>
+            <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.phone_number}}
+            </div>
+            <div class = "user__change" [ngClass]="{invisible: !userChangeMode}">
+                <input class="user__change-field" setWidth={{form.value.phone_number}}
+                    formControlName="phone_number" />
+                <div *ngIf="form.controls['phone_number'].errors">
+                    <div class="user__error" *ngIf="form.controls['phone_number'].errors.pattern">Введить номер в
+                        формате
+                        89051234567</div>
+                    <div class="user__error" *ngIf="form.controls['phone_number'].errors.required">Введите
+                        телефонный
+                        номер</div>
+                </div>
+            </div>
+        </div>
+        <div class="user__item">
+            <div>
+                <p></p><b class="user__header">Email:</b>
+            </div>
+            <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.email}}
+            </div>
+            <div class = "user__change" [ngClass]="{invisible: !userChangeMode}">
+                <input class="user__change-field" setWidth={{form.value.email}}
+                    formControlName="email" />
+                <div *ngIf="form.controls['email'].errors">
+                    <div class="user__error" *ngIf="form.controls['email'].errors.email">Неправильный email
+                    </div>
+                    <div class="user__error" *ngIf="form.controls['email'].errors.required">Введите email
                     </div>
                 </div>
             </div>
-            <p><b class="user__header">Email: </b>
-                <div class="user__item">
-                    <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{users[CurentUserId].email}}
-                    </div>
-                    <div [ngClass]="{invisible: !userChangeMode}">
-                        <input class="user__change" setWidth={{users[CurentUserId].email}} formControlName="email" />
-                        <div *ngIf="myForm.controls['email'].errors">
-                            <div class="user__error" *ngIf="myForm.controls['email'].errors.email">Неправильный email
-                            </div>
-                            <div class="user__error" *ngIf="myForm.controls['email'].errors.required">Введите email
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="user__button" [disabled]="myForm.invalid" [ngClass]="{invisible: !userChangeMode}"
-                    (click)="save(myForm.value.FIOForm.firstName, myForm.value.FIOForm.lastName, myForm.value.FIOForm.secondName, myForm.value.phone, myForm.value.email)">Сохранить</button>
-                <button class="user__button" [ngClass]="{invisible: userChangeMode}"
-                    (click)="change()">Редактировать</button>
+        </div>
+        <div class="user__buttons">
+            <button class="user__button" [ngClass]="{invisible: !userChangeMode}"
+                (click)="onSubmit(); userChangeMode=!userChangeMode">Сохранить</button>
+            <button class="user__button" [ngClass]="{invisible: userChangeMode}"
+                (click)="change()">Редактировать</button>
+            <button class="user__button" (click)="logout()">Выйти</button>
+        </div>
     </form>
 </div>

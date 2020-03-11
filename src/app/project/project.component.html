@@ -1,14 +1,26 @@
-<app-header></app-header>
 <div class="project">
-    <div class="project__content" *ngIf="projects">
-        <p><b>Название проекта: </b>{{projects[id].name}}</p>
-        <p><b>Стоимость проекта:</b> {{projects[id].cost}} рублей</p>
-        <p><b>Время на реализацию:</b> {{projects[id].timeLimitMonths}} месяцев</p>
-        <p><b>Цель проекта:</b> {{projects[id].target}}</p>
+    <div class="project__content" *ngIf="project">
+        <div *ngIf="userAdmin" class= "project__approved">
+            <div *ngIf="project.approved">
+                <img class="project__approved-img" src="/assets/images/ok.png">
+                <div class="project__approved-text">Проект одобрен</div>
+                <button class="project__button" (click) = approveProject(false)>Отменить одобрение проекта</button>
+            </div>
+            <div *ngIf="!project.approved">
+                <img class="project__approved-img" src="/assets/images/load.png">
+                <div class="project__approved-text">Проект на расмотрении</div>
+                <button class="project__button" (click) = approveProject(true)>Одобрить проект</button>
+            </div>            
+        </div>                
+        <p><b>Название проекта: </b>{{project.name}}</p>
+        <div *ngIf="userAdmin">
+            <p><b>Стоимость проекта:</b> {{project.cost}} рублей</p>
+            <p><b>Время на реализацию:</b> {{project.time_limit_months}} месяцев</p>
+        </div>
+        <p><b>Цель проекта:</b> {{project.target}}</p>
         <div class="project__description">
             <p class="project__description-header"><b>Описание проекта</b></p>
-            <p> {{projects[id].description}}</p>
+            <p> {{project.description}}</p>
         </div>
     </div>
 </div>
-<app-footer></app-footer>

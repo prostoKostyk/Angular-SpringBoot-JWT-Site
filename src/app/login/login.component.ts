@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { HttpService } from "../http.service";
+import { AuthService } from "../_services/auth.service";
+import { TokenStorageService } from "../_services/token-storage.service";
 
 @Component({
   selector: "app-login",
@@ -9,28 +11,32 @@ import { HttpService } from "../http.service";
   styleUrls: ["./login.component.less"]
 })
 export class LoginComponent implements OnInit {
-  users;
-  myForm: FormGroup;
-  message: string;
-  constructor(private httpService: HttpService) {
-    this.myForm = new FormGroup({
-      "login": new FormControl(),
-      "password": new FormControl()
-    });
-  }
+  form: any = {};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = "";
+
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
-    this.httpService.getUsers().subscribe(data => this.users = data);
-  }
-  login(login: string, password: string): number {
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].email === login || this.users[i].phoneNumber === login) {
-        if (this.users[i].password === password) {
-          this.message = "Ок";
-          return i;
-        }
-      }
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
     }
-    this.message = "Неверно введён логин или пароль";
+  }
+
+  login() {
+    this.authService.login(this.form).subscribe(
+      data => {
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveUser(data);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        window.location.replace("/cabinet");
+      },
+      err => {
+        this.errorMessage = "Неправильный логин или пароль";
+        this.isLoginFailed = true;
+      }
+    );
   }
 }

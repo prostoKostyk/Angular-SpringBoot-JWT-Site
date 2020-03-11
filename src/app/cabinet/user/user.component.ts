@@ -2,6 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { HttpService } from "src/app/http.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { User } from "src/app/models/users";
+import { AuthService } from "src/app/_services/auth.service";
+import { TokenStorageService } from "src/app/_services/token-storage.service";
+import { UserService } from "src/app/_services/user.service";
+
 
 @Component({
   selector: "app-user",
@@ -10,44 +14,68 @@ import { User } from "src/app/models/users";
   styleUrls: ["./user.component.less"]
 })
 export class UserComponent implements OnInit {
-  users: Array<User>;
+  user;
+  id: any;
   CurentUserId = 0;
   userChangeMode = false;
-  myForm: FormGroup;
-  constructor(private httpService: HttpService) {
-    this.myForm = new FormGroup({
-      FIOForm: new FormGroup({
-        "firstName": new FormControl("", [Validators.required]),
-        "secondName": new FormControl("", [Validators.required]),
-        "lastName": new FormControl("", [Validators.required])
-      }),
+  errorMessage = "";
+  form: FormGroup;
+  constructor(private httpService: HttpService, private userService: UserService, private tokenStorage: TokenStorageService) {
+    this.form = new FormGroup({
+      "username": new FormControl("", [Validators.required]),
+      "first_name": new FormControl("", [Validators.required]),
+      "second_name": new FormControl("", [Validators.required]),
+      "last_name": new FormControl("", [Validators.required]),
       "email": new FormControl("", [
         Validators.required,
         Validators.email
       ]),
-      "phone": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
+      "phone_number": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
     });
   }
 
   ngOnInit() {
-    this.httpService.getUsers().subscribe(data => this.users = data);
+    if (this.tokenStorage.getToken()) {
+      this.id = this.tokenStorage.getUser().id;
+      this.userService.getUser(this.id).subscribe(
+        data => {
+          this.user = data;
+        },
+        err => {
+          this.errorMessage = err.error.message;
+        }
+      );
+    }
+  }
+  onSubmit() {
+    this.userService.edit(this.form.value, this.id).subscribe(
+      data => {
+        this.userService.getUser(this.id).subscribe(
+          data2 => {
+            this.user = data2;
+          },
+          err => {
+            this.errorMessage = err.error.message;
+          }
+        );
+      },
+      err => {
+        this.errorMessage = err.error.message;
+      }
+    );
+  }
+
+  logout() {
+    this.tokenStorage.signOut();
+    window.location.replace("/login");
   }
 
   change(): void {
     this.userChangeMode = !this.userChangeMode;
-    this.myForm.setValue({
-      FIOForm: {
-        secondName: this.users[this.CurentUserId].secondName, firstName: this.users[this.CurentUserId].firstName,
-        lastName: this.users[this.CurentUserId].lastName
-      }, email: this.users[this.CurentUserId].email, phone: this.users[this.CurentUserId].phoneNumber
+    this.form.setValue({
+      username: this.user.username,
+      second_name: this.user.second_name, first_name: this.user.first_name,
+      last_name: this.user.last_name, email: this.user.email, phone_number: this.user.phone_number
     });
-  }
-  save(firstName: string, lastName: string, secondName: string, phone: string, email: string): void {
-    this.userChangeMode = !this.userChangeMode;
-    this.users[this.CurentUserId].secondName = secondName;
-    this.users[this.CurentUserId].firstName = firstName;
-    this.users[this.CurentUserId].lastName = lastName;
-    this.users[this.CurentUserId].email = email;
-    this.users[this.CurentUserId].phoneNumber = phone;
   }
 }

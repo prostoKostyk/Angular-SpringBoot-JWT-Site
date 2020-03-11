@@ -1,20 +1,20 @@
 export class User {
     id: number;
-    firstName: string;
+    first_name: string;
     secondName: string;
     lastName: string;
-    phoneNumber: string;
+    phone_number: string;
     email: string;
     password: string;
     userType: boolean;
 
      // tslint:disable-next-line:max-line-length
-     constructor(id: number, firstName: string, secondName: string, lastName: string, phoneNumber: string, email: string, password: string, userType: boolean) {
+     constructor(id: number, first_name: string, secondName: string, lastName: string, phone_number: string, email: string, password: string, userType: boolean) {
        this.id = id;
-       this.firstName = firstName;
+       this.first_name = first_name;
        this.secondName = secondName;
        this.lastName = lastName;
-       this.phoneNumber = phoneNumber;
+       this.phone_number = phone_number;
        this.email = email;
        this.password = password;
        this.userType = userType;
