@@ -1,13 +1,16 @@
 <div class="main">
     <div class="projects">
         <div class="projects__up">
-            <select class="project__sorting" (change)="sorting()" [(ngModel)]="sortingValue">
-                <option value="1">Сортировка по названию</option>
-                <option value="2">Сортировка по цене </option>
-                <option value="3">Сортировка по лимиту времени</option>
-            </select>
             <div *ngIf="userAdmin">
-                <select class="project__sorting left-5" (change)="onlyNotApprovedChange()" [(ngModel)]="onlyNotApproved">
+                <select class="project__sorting" (change)="sorting()" [(ngModel)]="sortingValue">
+                    <option value="1">Сортировка по названию</option>
+                    <option value="2">Сортировка по цене </option>
+                    <option value="3">Сортировка по лимиту времени</option>
+                </select>
+            </div>
+            <div *ngIf="userAdmin">
+                <select class="project__sorting left-5" (change)="onlyNotApprovedChange()"
+                    [(ngModel)]="onlyNotApproved">
                     <option value="1">Все проекты</option>
                     <option value="2">Только одобренные проекты </option>
                     <option value="3">Только проекты на рассмотрении</option>

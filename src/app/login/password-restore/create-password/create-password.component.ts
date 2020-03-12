@@ -16,6 +16,7 @@ export class CreatePasswordComponent implements OnInit {
   user;
   email: string;
   token: string;
+  message = "";
   constructor(private passwordRestoreService: PasswordRestoreService, private route: ActivatedRoute) {
     this.querySubscription = route.queryParams.subscribe(
       (queryParam: any) => {
@@ -32,7 +33,6 @@ export class CreatePasswordComponent implements OnInit {
       data => {
         this.user = data;
         this.email = this.user.email;
-        window.location.replace("/login");
       },
       err => {
       }
@@ -42,6 +42,7 @@ export class CreatePasswordComponent implements OnInit {
   restore(email: string, password: string): void {
     this.passwordRestoreService.resetPassword(email, password).subscribe(
       data => {
+        this.message = "Пароль успешно изменён";
       },
       err => {
       }
