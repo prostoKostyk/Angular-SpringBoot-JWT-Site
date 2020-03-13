@@ -27,8 +27,8 @@ export class UserCompanyComponent implements OnInit {
   changeMode: boolean;
   addMode: boolean;
   chosenCompanyId;
-  // tslint:disable-next-line:max-line-length
-  constructor(private http: HttpClient, public httpService: HttpService, private userService: UserService, private companiesService: CompaniesService, private tokenStorage: TokenStorageService) {
+  constructor(private http: HttpClient, public httpService: HttpService, private userService: UserService,
+              private companiesService: CompaniesService, private tokenStorage: TokenStorageService) {
     this.form = new FormGroup({
       "name": new FormControl("", [Validators.required]),
       "form": new FormControl("", [Validators.required]),
@@ -98,7 +98,7 @@ export class UserCompanyComponent implements OnInit {
         name: this.company.name,
         form: this.company.form,
         description: this.company.description,
-        foundation_date: this.company.foundation_date,
+        foundation_date: this.yyyymmdd(new Date(this.company.foundation_date)),
       });
     }
 
@@ -129,5 +129,20 @@ export class UserCompanyComponent implements OnInit {
       const mmStr = arr[date.getMonth()].toString();
       const yyStr = date.getFullYear().toString();
       return ddStr + " " + mmStr + " " + yyStr + " года";
+    }
+
+    yyyymmdd(date: Date): string {
+      date = new Date(date);
+      const y = date.getFullYear().toString();
+      let m = (date.getMonth() + 1).toString();
+      let d = date.getDate().toString();
+      if (d.length === 1) {
+        d = "0" + d;
+      }
+      if (m.length === 1) {
+        m = "0" + m;
+      }
+      const ddmmyyyy: string = y + "-" + m + "-" + d;
+      return ddmmyyyy;
     }
 }

@@ -30,8 +30,6 @@ import { MatProgressSpinnerModule, MatRadioModule, MatSliderModule } from "@angu
 import { RestorePasswordComponent } from "./login/password-restore/restore-password/restore-password.component";
 import { CreatePasswordComponent } from "./login/password-restore/create-password/create-password.component";
 import { VerificationCodeComponent } from "./login/password-restore/verification-code/verification-code.component";
-import { BoardAdminComponent } from "./board-admin/board-admin.component";
-import { BoardUserComponent } from "./board-user/board-user.component";
 import { authInterceptorProviders } from "./_helpers/auth.interceptor";
 
 // определение маршрутов
@@ -75,9 +73,7 @@ const appRoutes: Routes = [
     RestorePasswordComponent,
     CreatePasswordComponent,
     RestorePasswordComponent,
-    VerificationCodeComponent,
-    BoardAdminComponent,
-    BoardUserComponent
+    VerificationCodeComponent
   ],
   imports: [
     BrowserModule,

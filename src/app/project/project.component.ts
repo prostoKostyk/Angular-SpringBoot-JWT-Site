@@ -21,8 +21,8 @@ export class ProjectComponent implements OnInit {
   user;
   userAdmin = false;
   private subscription: Subscription;
-  // tslint:disable-next-line:max-line-length
-  constructor(public userService: UserService, private activateRoute: ActivatedRoute, private projectsService: ProjectsService, public tokenStorage: TokenStorageService) {
+  constructor(public userService: UserService, private activateRoute: ActivatedRoute, private projectsService: ProjectsService,
+              public tokenStorage: TokenStorageService) {
     this.subscription = activateRoute.params.subscribe(params => this.projectid = params.id);
   }
 

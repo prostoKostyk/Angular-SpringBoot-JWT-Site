@@ -31,8 +31,8 @@ export class UserProjectsComponent implements OnInit {
   userId;
   user;
   errorMessage = "";
-  // tslint:disable-next-line:max-line-length
-  constructor(public httpService: HttpService, public userService: UserService, public projectService: ProjectsService, public tokenStorage: TokenStorageService) {
+  constructor(public httpService: HttpService, public userService: UserService, public projectService: ProjectsService,
+              public tokenStorage: TokenStorageService) {
     this.form = new FormGroup({
       "name": new FormControl("", [Validators.required]),
       "cost": new FormControl("", [Validators.required]),

@@ -16,8 +16,8 @@ export class ProjectsComponent extends UserProjectsComponent implements OnInit {
   userId: number;
   userAdmin = false;
   onlyNotApproved = "1";
-  // tslint:disable-next-line:max-line-length
-  constructor(public httpService: HttpService, public userService: UserService, public projectsService: ProjectsService, public tokenStorage: TokenStorageService) {
+  constructor(public httpService: HttpService, public userService: UserService, public projectsService: ProjectsService,
+              public tokenStorage: TokenStorageService) {
     super(httpService, userService, projectsService, tokenStorage);
   }
 

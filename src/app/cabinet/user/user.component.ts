@@ -15,7 +15,7 @@ import { UserService } from "src/app/_services/user.service";
 })
 export class UserComponent implements OnInit {
   user;
-  id: any;
+  id: number;
   CurentUserId = 0;
   userChangeMode = false;
   errorMessage = "";

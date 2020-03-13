@@ -1,10 +1,9 @@
-import {Directive, HostListener, ElementRef, Input, HostBinding, OnInit} from "@angular/core";
+import {Directive, HostListener, ElementRef, Input, OnChanges} from "@angular/core";
 
 @Directive({
-    // tslint:disable-next-line:directive-selector
     selector: "[setWidth]"
 })
-export class InputWidthDirective {
+export class InputWidthDirective implements OnChanges  {
  @Input("setWidth") word;
  constructor(private el: ElementRef) { }
  @HostListener("change") ngOnChanges(): void {
