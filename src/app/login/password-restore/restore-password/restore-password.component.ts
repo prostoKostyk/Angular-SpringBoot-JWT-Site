@@ -20,19 +20,24 @@ export class RestorePasswordComponent implements OnInit {
     });
   }
   message: string;
+  send: boolean;
   successSend: boolean;
+  falseSend: boolean;
 
   ngOnInit() {
   }
   sendEmail(email) {
+    this.send = true;
     this.passwordRestoreService.sendEmail(email).subscribe(
       data => {
         this.message = "На вашу почту " + email + " было отправлено письмо с дальнейшими указаниями";
         this.successSend = true;
+        this.falseSend = false;
       },
       err => {
-        this.message = "Пользователь с адресом " + email + " не зарегистрирован";
-        this.successSend = false;
+        this.falseSend = true;
+        this.message = "Не удалось отправить письмо";
+        // this.message = err.error.message;
       }
     );
   }
