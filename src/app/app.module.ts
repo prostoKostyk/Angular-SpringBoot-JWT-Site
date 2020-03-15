@@ -31,6 +31,7 @@ import { RestorePasswordComponent } from "./login/password-restore/restore-passw
 import { CreatePasswordComponent } from "./login/password-restore/create-password/create-password.component";
 import { VerificationCodeComponent } from "./login/password-restore/verification-code/verification-code.component";
 import { authInterceptorProviders } from "./_helpers/auth.interceptor";
+import { UserInfoComponent } from "./user-info/user-info.component";
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
   { path: "create-password", component: CreatePasswordComponent },
   { path: "verification-code", component: VerificationCodeComponent },
   { path: "confirm-reset", component: CreatePasswordComponent },
+  { path: "projects/project/:id/user/:userid", component: UserInfoComponent },
   { path: "**", component: NotFoundComponent }
 ];
 
@@ -73,7 +75,8 @@ const appRoutes: Routes = [
     RestorePasswordComponent,
     CreatePasswordComponent,
     RestorePasswordComponent,
-    VerificationCodeComponent
+    VerificationCodeComponent,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,

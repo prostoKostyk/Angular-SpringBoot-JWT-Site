@@ -7,8 +7,7 @@
             <div class="user__view" [ngClass]="{invisible: false}">{{user.username}}
             </div>
             <div [ngClass]="{invisible: true}">
-                <input class="user__change" setWidth={{user.username}} name="username"
-                    formControlName="username" />
+                <input class="user__change" setWidth={{user.username}} name="username" formControlName="username" />
             </div>
         </div>
         <div class="user__item">
@@ -18,13 +17,10 @@
             <div class="user__view" [ngClass]="{invisible: userChangeMode}">
                 {{user.second_name}} {{user.first_name}} {{user.last_name}}
             </div>
-            <div class = "user__change" [ngClass]="{invisible: !userChangeMode}">
-                <input class="user__change-field" setWidth={{form.value.second_name}}
-                    formControlName="second_name" />
-                <input class="user__change-field" setWidth={{form.value.first_name}}
-                    formControlName="first_name" />
-                <input class="user__change-field" setWidth={{form.value.last_name}}
-                    formControlName="last_name" />
+            <div class="user__change" [ngClass]="{invisible: !userChangeMode}">
+                <input class="user__change-field" setWidth={{form.value.second_name}} formControlName="second_name" />
+                <input class="user__change-field" setWidth={{form.value.first_name}} formControlName="first_name" />
+                <input class="user__change-field" setWidth={{form.value.last_name}} formControlName="last_name" />
                 <div class="user__error" *ngIf="form.controls['second_name'].invalid">Введите фамилию
                 </div>
                 <div class="user__error" *ngIf="form.controls['first_name'].invalid">Введите имя</div>
@@ -38,9 +34,8 @@
             </div>
             <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.phone_number}}
             </div>
-            <div class = "user__change" [ngClass]="{invisible: !userChangeMode}">
-                <input class="user__change-field" setWidth={{form.value.phone_number}}
-                    formControlName="phone_number" />
+            <div class="user__change" [ngClass]="{invisible: !userChangeMode}">
+                <input class="user__change-field" setWidth={{form.value.phone_number}} formControlName="phone_number" />
                 <div *ngIf="form.controls['phone_number'].errors">
                     <div class="user__error" *ngIf="form.controls['phone_number'].errors.pattern">Введить номер в
                         формате
@@ -57,9 +52,8 @@
             </div>
             <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.email}}
             </div>
-            <div class = "user__change" [ngClass]="{invisible: !userChangeMode}">
-                <input class="user__change-field" setWidth={{form.value.email}}
-                    formControlName="email" />
+            <div class="user__change" [ngClass]="{invisible: !userChangeMode}">
+                <input class="user__change-field" setWidth={{form.value.email}} formControlName="email" />
                 <div *ngIf="form.controls['email'].errors">
                     <div class="user__error" *ngIf="form.controls['email'].errors.email">Неправильный email
                     </div>
@@ -70,10 +64,56 @@
         </div>
         <div class="user__buttons">
             <button class="user__button" [ngClass]="{invisible: !userChangeMode}"
-                (click)="onSubmit(); userChangeMode=!userChangeMode">Сохранить</button>
+                (click)="saveUser(); userChangeMode=!userChangeMode">Сохранить</button>
             <button class="user__button" [ngClass]="{invisible: userChangeMode}"
                 (click)="change()">Редактировать</button>
             <button class="user__button" (click)="logout()">Выйти</button>
         </div>
     </form>
+    <p></p>
+    <p><div class="user__exp-head left-5">Опыт работы</div>
+    <button class="user__button left-5 width-20" (click)="addMode= !addMode">Добавить место работы</button>
+    <form class="user__addExp" [formGroup]="experienceForm" name="experienceForm" #f="ngForm" *ngIf="addMode"
+        novalidate>
+        <div class="user__addExp-item">
+            <p><label>Организация</label></p>
+            <input class="user__addExp-field" formControlName="company" />
+        </div>
+        <div class="user__addExp-item left-2">
+            <p><label>Должность</label></p>
+            <input class="user__addExp-field" formControlName="position" />
+        </div>
+        <div class="user__addExp-item left-2">
+            <p><label>Начало работы</label></p>
+            <input type="date" class="user__addExp-date" formControlName="beginning_date" />
+        </div>
+        <div class="user__addExp-item left-2">
+            <p><label>Окончание</label></p>
+            <input type="date" class="user__addExp-date" formControlName="end_date" />  
+        </div>
+        <button class="user__addExp-button" (click)="addExperience()">Добавить</button>
+    </form>
+    <table *ngIf="user" class="user_experience">
+        <ng-container *ngIf="user.experience.length > 0">
+        <tbody>
+            <tr>
+                <th class="user__experience-head"></th>
+                <th class="user__experience-head">Организация</th>
+                <th class="user__experience-head">Должность</th>
+                <th class="user__experience-head">Начало работы</th>
+                <th class="user__experience-head">Окончание</th>
+                <th class="user__experience-head">Стаж</th>
+            </tr>
+            <tr *ngFor="let i = index; let experience of user.experience;">
+                
+                    <td class="user__experience-td user__experience-numb">{{i+1}}</td>
+                    <td class="user__experience-td">{{experience.company}}</td>
+                    <td class="user__experience-td">{{experience.position}}</td>
+                    <td class="user__experience-td width-7">{{yyyymmdd(experience.beginning_date)}}</td>
+                    <td class="user__experience-td width-7">{{yyyymmdd(experience.end_date)}}</td>
+                    <td class="user__experience-td width-7">{{getTime(experience.beginning_date, experience.end_date)}} месяцев</td>
+            </tr>
+        </tbody>
+    </ng-container>
+    </table>
 </div>

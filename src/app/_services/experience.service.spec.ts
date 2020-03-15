@@ -1,12 +1,12 @@
 import { TestBed } from "@angular/core/testing";
 
-import { ProjectsService } from "./projects.service";
+import { ExperienceService } from "./experience.service";
 
-describe("ProjectsService", () => {
+describe("ExperienceService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it("should be created", () => {
-    const service: ProjectsService = TestBed.get(ProjectsService);
+    const service: ExperienceService = TestBed.get(ExperienceService);
     expect(service).toBeTruthy();
   });
 });
