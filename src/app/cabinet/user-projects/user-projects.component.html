@@ -1,12 +1,12 @@
 <div class="projects">
     <div>
-        <button class="projects__button" (click)="addMode = !addMode">Новый проект</button>
+        <button class="projects__button" (click)="projectAddMode = !projectAddMode">Новый проект</button>
     </div>
-    <div *ngIf="addMode" class="projects__new">
-        <form [formGroup]="form" novalidate>
+    <div *ngIf="projectAddMode" class="projects__new">
+        <form [formGroup]="newProjectForm" novalidate>
             <p><b class="projects__header">Название проекта: </b>
                 <div class="projects__item">
-                    <input class="projects__input" setWidth={{form.value.name}} formControlName="name" />
+                    <input class="projects__input" setWidth={{newProjectForm.value.name}} formControlName="name" />
                 </div>
                 <p><b class="projects__header">Стоимость проекта:</b>
                     <div class="projects__item">
@@ -20,21 +20,20 @@
                         </div>
                         <p><b class="projects__header">Цель проекта:</b>
                             <div class="projects__item">
-                                <textarea class="projects__input projects__textarea"
-                                maxlength=150 formControlName="target"> </textarea>
+                                <textarea class="projects__input projects__textarea" maxlength=150
+                                    formControlName="target"> </textarea>
                             </div>
                             <p><b class="projects__header">Описание проекта:</b>
                                 <div class="projects__item">
-                                    <textarea class="projects__input projects__textarea"
-                                    maxlength=450
-                                        rows={{form.value.description.length*0.02}}
+                                    <textarea class="projects__input projects__textarea" maxlength=450
+                                        rows={{newProjectForm.value.description.length*0.02}}
                                         formControlName="description"></textarea>
                                 </div>
         </form>
         <p><b class="projects__header">Добавить участников проекта: </b>
-            <select [(ngModel)]="addUserValue" class="project__users">
-                <option *ngFor="let user of users.content;" value="{{user.id}}">
-                    {{user.second_name}} {{user.first_name}} {{user.last_name}}
+            <select [(ngModel)]="addUserId" *ngIf="usersInCompany" class="project__users">
+                <option *ngFor="let user of usersInCompany" value="{{user.id}}">
+                    {{user.secondName + ' ' + user.firstName + ' ' + user.lastName}}
                 </option>
             </select>
             <button class="projects__button left-50" (click)="addUserToProject()">Добавить</button>
@@ -45,12 +44,12 @@
                             src="/assets/images/cancel_black.png">
                     </div>
                 </div>
-                <p><button class="projects__button" [disabled]="form.invalid" (click)="addProject()">Добавить
+                <p><button class="projects__button" [disabled]="newProjectForm.invalid" (click)="addProject()">Добавить
                         проект</button>
-                    <button class="projects__button" (click)="addMode = !addMode">Назад</button></p>
+                    <button class="projects__button" (click)="projectAddMode = !projectAddMode">Назад</button></p>
     </div>
     <div class="project__filter">
-        <select (change)="filter()" [(ngModel)]="filterValue">
+        <select (change)="groupByApprove(true)" [(ngModel)]="onlyNotApproved">
             <option value="1">Все проекты</option>
             <option value="2">Только одобренные </option>
             <option value="3">Только на расмотрении</option>
@@ -58,7 +57,7 @@
     </div>
     <div class="projects__search">
         <input class="projects__search-input" [(ngModel)]="searchWord" placeholder=" Введите название проекта...">
-        <button class="projects__search-button" (click)="search()"></button>
+        <button class="projects__search-button" (click)="findProjects(true)"></button>
         <div *ngIf="searchMessage">
             <div>
                 {{searchMessage}}<img class="project__cancel-button" src="/assets/images/cancel.png"
@@ -66,12 +65,13 @@
             </div>
         </div>
     </div>
-    <div class="project" *ngIf="user && !user.projects[0]"> У вас пока что нет проектов, добавьте новый</div>
-    <div *ngIf="showingProjects && users">
-        <div class="project" *ngIf="showingProjects.length > 0">
+    <!-- <div class="project" *ngIf="curentUser && !curentUser.projects[0]"> У вас пока что нет проектов, добавьте новый
+    </div> -->
+    <div *ngIf="showingProjects">
+        <div  *ngIf="showingProjects.length > 0">
             <div *ngFor="let i = index; let project of showingProjects;">
-                <div *ngIf="project.approved === !showNotApproved || project.approved === showApproved">
-                    <form [formGroup]="form" novalidate>
+            <div class="project">
+                    <form [formGroup]="newProjectForm" novalidate>
                         <div *ngIf="getProjectStatus(project.id)">
                             <img class="project__approved-img" src="/assets/images/ok.png">
                             <div class="project__approved">Одобрен</div>
@@ -86,7 +86,7 @@
                                     {{project.name}}
                                 </div>
                                 <div [ngClass]="{invisible: projectChangeId != project.id}">
-                                    <input class="projects__input" setWidth={{form.value.name}}
+                                    <input class="projects__input" setWidth={{newProjectForm.value.name}}
                                         formControlName="name" />
                                 </div>
                             </div>
@@ -136,18 +136,17 @@
                                             </div>
                                             <p></p>
                                             <div class="projects__users-string">Участники проекта:
-                                                {{getUsersInProject(project.id)}}
+                                                {{ usersInProjects[project.id] }}
                                             </div>
                     </form>
                     <div *ngIf="!project.approved">
                         <button [ngClass]="{invisible: projectChangeMode}" class="projects__button"
                             (click)="change(project.id)">Редактировать</button>
                         <button [ngClass]="{invisible: !projectChangeMode}" class="projects__button"
-                            [disabled]="form.invalid" (click)="save(project.id)">Сохранить</button>
+                            [disabled]="newProjectForm.invalid" (click)="save(project.id)">Сохранить</button>
                     </div>
-                    <div class="services__line"></div>
-                </div>
+                    
             </div>
+            <div class="services__line"></div>
         </div>
-    </div>
 </div>

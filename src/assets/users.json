@@ -1,8 +1,8 @@
 { 
     "users":
     [
-       {"id": "1", "first_name": "Иван", "secondName": "Иванов", "lastName": "Иванович", "phone_number": "89051441320", "email": "ivan@mail.ru", "password": "0000", "userType": "true", "allExperienceYears": "10" }, 
-       {"id": "2", "first_name": "Иван2", "secondName": "Иванов2", "lastName": "Иванович2", "phone_number": "89051441322", "email": "ivan2@mail.ru", "password": "1111", "userType": "true", "allExperienceYears": "10" },
-       {"id": "3", "first_name": "Иван3", "secondName": "Иванов3", "lastName": "Иванович3", "phone_number": "89051441323", "email": "ivan3@mail.ru", "password": "2222", "userType": "false", "allExperienceYears": "10" }
+       {"id": "1", "firstName": "Иван", "secondName": "Иванов", "lastName": "Иванович", "phoneNumber": "89051441320", "email": "ivan@mail.ru", "password": "0000", "userType": "true", "allExperienceYears": "10" }, 
+       {"id": "2", "firstName": "Иван2", "secondName": "Иванов2", "lastName": "Иванович2", "phoneNumber": "89051441322", "email": "ivan2@mail.ru", "password": "1111", "userType": "true", "allExperienceYears": "10" },
+       {"id": "3", "firstName": "Иван3", "secondName": "Иванов3", "lastName": "Иванович3", "phoneNumber": "89051441323", "email": "ivan3@mail.ru", "password": "2222", "userType": "false", "allExperienceYears": "10" }
       ]
 }

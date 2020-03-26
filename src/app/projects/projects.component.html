@@ -2,15 +2,14 @@
     <div class="projects">
         <div class="projects__up">
             <div *ngIf="userAdmin">
-                <select class="project__sorting" (change)="sorting()" [(ngModel)]="sortingValue">
-                    <option value="1">Сортировка по названию</option>
-                    <option value="2">Сортировка по цене </option>
-                    <option value="3">Сортировка по лимиту времени</option>
+                <select class="project__sorting" (change)="sortChange()" [(ngModel)]="sortingValue">
+                    <option value="name">Сортировка по названию</option>
+                    <option value="cost">Сортировка по цене </option>
+                    <option value="time_limit_months">Сортировка по лимиту времени</option>
                 </select>
             </div>
             <div *ngIf="userAdmin">
-                <select class="project__sorting left-5" (change)="onlyNotApprovedChange()"
-                    [(ngModel)]="onlyNotApproved">
+                <select class="project__sorting left-5" (change)="group(true)" [(ngModel)]="onlyNotApproved">
                     <option value="1">Все проекты</option>
                     <option value="2">Только одобренные проекты </option>
                     <option value="3">Только проекты на рассмотрении</option>
@@ -19,7 +18,7 @@
             <div class="projects__search">
                 <input class="projects__search-input" [(ngModel)]="searchWord"
                     placeholder=" Введите название проекта...">
-                <button class="projects__search-button" (click)="search()"></button>
+                <button class="projects__search-button" (click)="findProjects(true)"></button>
                 <div *ngIf="searchMessage">
                     <div>
                         {{searchMessage}}<img class="project__cancel-button" src="/assets/images/cancel.png"
@@ -28,8 +27,23 @@
                 </div>
             </div>
         </div>
-        <div *ngFor="let i = index; let project of showingProjects;">
-            <div *ngIf="project.approved || userAdmin">
+        
+        <div *ngIf="findedProjectsLength === 0 && groupedProjectsLength === 0">
+            <div *ngFor="let i = index; let project of showingProjects;">
+                <div class="projects__item" [ngClass]="{'left-yellow': !project.approved}"
+                    [routerLink]="['project', project.id]">{{project.name}}
+                </div>
+            </div>
+        </div>
+        <div *ngIf="findedProjectsLength > 0">
+            <div *ngFor="let i = index; let project of findedProjects;">
+                <div class="projects__item" [ngClass]="{'left-yellow': !project.approved}"
+                    [routerLink]="['project', project.id]">{{project.name}}
+                </div>
+            </div>
+        </div>
+        <div *ngIf="groupedProjectsLength > 0">
+            <div *ngFor="let i = index; let project of groupedProjects;">
                 <div class="projects__item" [ngClass]="{'left-yellow': !project.approved}"
                     [routerLink]="['project', project.id]">{{project.name}}
                 </div>

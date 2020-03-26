@@ -1,20 +1,20 @@
 export class User {
   id: number;
-  first_name: string;
+  firstName: string;
   secondName: string;
   lastName: string;
-  phone_number: string;
+  phoneNumber: string;
   email: string;
   password: string;
   userType: boolean;
 
-  constructor(id: number, first_name: string, secondName: string, lastName: string,
-              phone_number: string, email: string, password: string, userType: boolean) {
+  constructor(id: number, firstName: string, secondName: string, lastName: string,
+              phoneNumber: string, email: string, password: string, userType: boolean) {
     this.id = id;
-    this.first_name = first_name;
+    this.firstName = firstName;
     this.secondName = secondName;
     this.lastName = lastName;
-    this.phone_number = phone_number;
+    this.phoneNumber = phoneNumber;
     this.email = email;
     this.password = password;
     this.userType = userType;

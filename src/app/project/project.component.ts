@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { HttpService } from "../http.service";
-import { Project } from "../models/projects";
 import { ProjectsService } from "../_services/projects.service";
 import { TokenStorageService } from "../_services/token-storage.service";
 import { UserService } from "../_services/user.service";
@@ -17,13 +16,15 @@ import {Router} from "@angular/router";
 export class ProjectComponent implements OnInit {
   project;
   projectid: number;
-  errorMessage = "";
-  userId: number;
+
   user;
   users;
-  userAdmin = false;
+  userId: number;
   usersInProject = [];
-  private subscription: Subscription;
+  userAdmin = false;
+
+  subscription: Subscription;
+
   constructor(public userService: UserService, private activateRoute: ActivatedRoute, private projectsService: ProjectsService,
               public tokenStorage: TokenStorageService, private router: Router) {
     this.subscription = activateRoute.params.subscribe(params => this.projectid = params.id);
@@ -31,11 +32,11 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit() {
     this.projectsService.getProject(this.projectid).subscribe(
-      data => {
-        this.project = data;
+      projectData => {
+        this.project = projectData;
         this.userService.getUsers().subscribe(
-          data2 => {
-            this.users = data2;
+          allUsersData => {
+            this.users = allUsersData;
             this.getUsersInProject();
           }
         );
@@ -59,19 +60,21 @@ export class ProjectComponent implements OnInit {
     this.project.approved = approved;
     this.projectsService.updateProject(this.project, this.projectid).subscribe();
   }
+
   getUsersInProject(): void {
     for (const user of this.users.content) {
       for (const project of user.projects) {
         if (project.id.toString() === this.projectid) {
           this.usersInProject.push({
             id: user.id,
-            name: user.second_name + " " + user.first_name + " " + user.last_name
+            name: user.secondName + " " + user.firstName + " " + user.lastName
           });
           break;
         }
       }
     }
   }
+
   getUserInfo(userId: number) {
     this.router.navigate(["projects/project/" + this.projectid + "/user/" + userId.toString()]);
   }

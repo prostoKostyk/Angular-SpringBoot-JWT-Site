@@ -11,10 +11,11 @@ import { TokenStorageService } from "../_services/token-storage.service";
   styleUrls: ["./login.component.less"]
 })
 export class LoginComponent implements OnInit {
-  form: any = {};
+  loginForm = {};
+  errorMessage = "";
+
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = "";
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
@@ -25,10 +26,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.form).subscribe(
-      data => {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUser(data);
+    this.authService.login(this.loginForm).subscribe(
+      loginData => {
+        this.tokenStorage.saveToken(loginData.accessToken);
+        this.tokenStorage.saveUser(loginData);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         window.location.replace("/cabinet");

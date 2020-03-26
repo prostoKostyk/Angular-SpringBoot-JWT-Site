@@ -10,6 +10,7 @@ export class CabinetComponent implements OnInit {
   userVisible = true;
   companyVisible = false;
   projectsVisible = false;
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -26,6 +27,7 @@ export class CabinetComponent implements OnInit {
     this.companyVisible = true;
     this.projectsVisible = false;
   }
+
   showProjects(): void {
     this.userVisible = false;
     this.companyVisible = false;

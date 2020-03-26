@@ -10,22 +10,21 @@ import { Router } from "@angular/router";
   styleUrls: ["./registration.component.less"]
 })
 export class RegistrationComponent implements OnInit {
+  errorMessage = "";
+
   isSuccessful = false;
   isSignUpFailed = false;
-  errorMessage = "";
-  users;
-  form: any = {};
+
+  form = {};
+
   constructor(private authService: AuthService, private router: Router) {
     this.form = new FormGroup({
       "username": new FormControl("", []),
-      "first_name": new FormControl("", [Validators.required]),
-      "second_name": new FormControl("", [Validators.required]),
-      "last_name": new FormControl("", [Validators.required]),
-      "email": new FormControl("", [
-        Validators.required,
-        Validators.email
-      ]),
-      "phone_number": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
+      "firstName": new FormControl("", [Validators.required]),
+      "secondName": new FormControl("", [Validators.required]),
+      "lastName": new FormControl("", [Validators.required]),
+      "email": new FormControl("", [Validators.required, Validators.email]),
+      "phoneNumber": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
       PasswordsForm: new FormGroup({
         "password": new FormControl("", [Validators.required, Validators.min(8)]),
         "passwordConfirm": new FormControl("", [Validators.required])

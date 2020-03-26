@@ -1,11 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { GlobalVariable } from "../_helpers/variables.service";
 
-const API_URL = "http://localhost:8080/";
-const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" })
-};
+const API_URL = GlobalVariable.API_URL;
+const httpOptions = GlobalVariable.httpOptions;
 
 @Injectable({
   providedIn: "root"
@@ -24,16 +23,20 @@ export class UserService {
   edit(user, id): Observable<any> {
     return this.http.put(API_URL + "users/" + id, {
       username: user.username,
-      first_name: user.first_name,
-      second_name: user.second_name,
-      last_name: user.last_name,
-      phone_number: user.phone_number,
+      firstName: user.firstName,
+      secondName: user.secondName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
       email: user.email,
     }, httpOptions);
   }
 
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + "all", { responseType: "text" });
+  getFindByProject(projectId: number): Observable<any> {
+    return this.http.get(API_URL + "findusersbyproject/" + projectId);
+  }
+
+  getFindByCompany(companyId: number): Observable<any> {
+    return this.http.get(API_URL + "findusersbycompany/" + companyId);
   }
 
   getUserBoard(): Observable<any> {

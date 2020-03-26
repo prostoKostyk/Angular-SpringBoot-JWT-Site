@@ -10,22 +10,26 @@ import { PasswordRestoreService } from "src/app/_services/password-restore.servi
 })
 export class RestorePasswordComponent implements OnInit {
 
-  myForm: FormGroup;
+  message: string;
+
+  emailForm: FormGroup;
+
+  send: boolean;
+  successSend: boolean;
+  falseSend: boolean;
+
   constructor(private router: Router, private passwordRestoreService: PasswordRestoreService ) {
-    this.myForm = new FormGroup({
+    this.emailForm = new FormGroup({
       "email": new FormControl("", [
         Validators.required,
         Validators.email
       ])
     });
   }
-  message: string;
-  send: boolean;
-  successSend: boolean;
-  falseSend: boolean;
 
   ngOnInit() {
   }
+
   sendEmail(email) {
     this.send = true;
     this.passwordRestoreService.sendEmail(email).subscribe(

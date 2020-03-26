@@ -14,27 +14,25 @@ import { ExperienceService } from "src/app/_services/experience.service";
 })
 export class UserComponent implements OnInit {
   user;
-  id: number;
-  CurentUserId = 0;
-  userChangeMode = false;
-  errorMessage = "";
-  form: FormGroup;
+  userExperience;
+  curentUserId = 0;
+  userForm: FormGroup;
+
   experienceForm: FormGroup;
-  experience;
-  experienceId: number;
-  addMode = false;
+  experienceToDeleteId: number;
+
+  userChangeMode = false;
+  addExperienceMode = false;
+
   constructor(public httpService: HttpService, public userService: UserService, public tokenStorage: TokenStorageService,
               public experienceService: ExperienceService) {
-    this.form = new FormGroup({
+    this.userForm = new FormGroup({
       "username": new FormControl("", [Validators.required]),
-      "first_name": new FormControl("", [Validators.required]),
-      "second_name": new FormControl("", [Validators.required]),
-      "last_name": new FormControl("", [Validators.required]),
-      "email": new FormControl("", [
-        Validators.required,
-        Validators.email
-      ]),
-      "phone_number": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
+      "firstName": new FormControl("", [Validators.required]),
+      "secondName": new FormControl("", [Validators.required]),
+      "lastName": new FormControl("", [Validators.required]),
+      "email": new FormControl("", [Validators.required, Validators.email]),
+      "phoneNumber": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
     });
 
     this.experienceForm = new FormGroup({
@@ -42,40 +40,32 @@ export class UserComponent implements OnInit {
       "position": new FormControl("", [Validators.required]),
       "beginning_date": new FormControl("", [Validators.required]),
       "end_date": new FormControl("", [Validators.required]),
-      "experience_months": new FormControl("", [Validators.required]),
+      "experience_months": new FormControl(1, [Validators.required]),
     });
   }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
-      this.id = this.tokenStorage.getUser().id;
-      this.userService.getUser(this.id).subscribe(
-        data => {
-          this.user = data;
-          this.experience = this.user.experience;
-          this.experience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
-        },
-        err => {
-          this.errorMessage = err.error.message;
+      this.curentUserId = this.tokenStorage.getUser().id;
+      this.userService.getUser(this.curentUserId).subscribe(
+        userData => {
+          this.user = userData;
+          this.userExperience = this.user.experience;
+          this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
         }
       );
     }
   }
+
   saveUser() {
-    this.userService.edit(this.form.value, this.id).subscribe(
+    this.userService.edit(this.userForm.value, this.curentUserId).subscribe(
       data => {
-        this.userService.getUser(this.id).subscribe(
+        this.userService.getUser(this.curentUserId).subscribe(
           data2 => {
             this.user = data2;
-            this.experience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
-          },
-          err => {
-            this.errorMessage = err.error.message;
+            this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
           }
         );
-      },
-      err => {
-        this.errorMessage = err.error.message;
       }
     );
   }
@@ -87,27 +77,42 @@ export class UserComponent implements OnInit {
 
   change(): void {
     this.userChangeMode = !this.userChangeMode;
-    this.form.setValue({
+    this.userForm.setValue({
       username: this.user.username,
-      second_name: this.user.second_name, first_name: this.user.first_name,
-      last_name: this.user.last_name, email: this.user.email, phone_number: this.user.phone_number
+      secondName: this.user.secondName, firstName: this.user.firstName,
+      lastName: this.user.lastName, email: this.user.email, phoneNumber: this.user.phoneNumber
     });
   }
 
   addExperience(): void {
-    this.experienceService.addExperience(this.experienceForm.value, this.user.id).subscribe(
-      data => {
-      this.userService.getUser(this.id).subscribe(
-        data2 => {
-          this.user = data;
-          this.experience = this.user.experience;
-          this.experience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
-        });
+    this.experienceService.addExperience(this.experienceForm.value, this.curentUserId).subscribe(
+      expData => {
+        this.userService.getUser(this.curentUserId).subscribe(
+          userData => {
+            this.user = userData;
+            this.userExperience = this.user.experience;
+            this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
+          });
       });
-    this.addMode = !this.addMode;
+    this.addExperienceMode = !this.addExperienceMode;
   }
 
-  yyyymmdd(date: Date): string {
+  deleteExperience(experienceToDeleteId: number) {
+    this.experienceService.deleteUserExperience(experienceToDeleteId).subscribe(
+      data => {
+        this.experienceService.deleteExperience(experienceToDeleteId).subscribe(
+          data2 => {
+            this.userService.getUser(this.curentUserId).subscribe(
+              userData => {
+                this.user = userData;
+                this.userExperience = this.user.experience;
+                this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
+              });
+          });
+      });
+  }
+
+  dateConvert(date: Date): string {
     date = new Date(date);
     const y = date.getFullYear().toString();
     let m = (date.getMonth() + 1).toString();
@@ -122,7 +127,7 @@ export class UserComponent implements OnInit {
     return ddmmyyyy;
   }
 
-  getTime(beginning_date, end_date) {
+  getExperienceMonth(beginning_date, end_date) {
     return Math.floor(((new Date(end_date)).getTime() - (new Date(beginning_date)).getTime()) / 1000 / 60 / 60 / 24 / 30);
   }
 }

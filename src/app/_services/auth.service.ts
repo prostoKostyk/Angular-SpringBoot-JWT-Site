@@ -1,12 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { GlobalVariable } from "../_helpers/variables.service";
 
-const AUTH_API = "http://localhost:8080/";
-
-const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" })
-};
+const AUTH_API = GlobalVariable.API_URL;
+const httpOptions = GlobalVariable.httpOptions;
 
 @Injectable({
   providedIn: "root"
@@ -25,10 +23,10 @@ export class AuthService {
   register(user): Observable<any> {
     return this.http.post(AUTH_API + "signup", {
       username: user.username,
-      first_name: user.first_name,
-      second_name: user.second_name,
-      last_name: user.last_name,
-      phone_number: user.phone_number,
+      firstName: user.firstName,
+      secondName: user.secondName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
       email: user.email,
       password: user.password
     }, httpOptions);

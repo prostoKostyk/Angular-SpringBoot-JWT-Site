@@ -1,18 +1,19 @@
- 
-<div class = "cabinet">
-<ul class="cabinet__menu">
-<button class ="cabinet__menu-item cabinet__menu-item-first" (click) = "showUser()" [ngClass]="{darkGreen: userVisible}">Обо мне</button>
-<button class ="cabinet__menu-item" (click) = "showcompany()" [ngClass]="{darkGreen: companyVisible}">Моя компания</button>
-<button class ="cabinet__menu-item" (click) = "showProjects()" [ngClass]="{darkGreen: projectsVisible}">Мои проекты</button>
-</ul>
-<div *ngIf = "userVisible" >
-    <app-user></app-user>
+<div class="cabinet">
+    <ul class="cabinet__menu">
+        <button class="cabinet__menu-item cabinet__menu-item-first" (click)="showUser()"
+            [ngClass]="{darkGreen: userVisible}">Обо мне</button>
+        <button class="cabinet__menu-item" (click)="showcompany()" [ngClass]="{darkGreen: companyVisible}">Моя
+            компания</button>
+        <button class="cabinet__menu-item" (click)="showProjects()" [ngClass]="{darkGreen: projectsVisible}">Мои
+            проекты</button>
+    </ul>
+    <div *ngIf="userVisible">
+        <app-user></app-user>
+    </div>
+    <div *ngIf="companyVisible">
+        <app-user-company></app-user-company>
+    </div>
+    <div *ngIf="projectsVisible">
+        <app-user-projects></app-user-projects>
+    </div>
 </div>
-<div *ngIf = "companyVisible">
-    <app-user-company></app-user-company>
-</div>
-<div *ngIf = "projectsVisible">
-    <app-user-projects></app-user-projects>
-</div>
-</div>
- 

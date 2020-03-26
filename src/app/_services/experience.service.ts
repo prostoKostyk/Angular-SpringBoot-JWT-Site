@@ -1,11 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { GlobalVariable } from "../_helpers/variables.service";
 
-const API_URL = "http://localhost:8080/";
-const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" })
-};
+const API_URL = GlobalVariable.API_URL;
+const httpOptions = GlobalVariable.httpOptions;
 
 @Injectable({
   providedIn: "root"
@@ -32,14 +31,13 @@ export class ExperienceService {
     }, httpOptions);
   }
 
-  updateExperience(project, projectId) {
-    return this.http.put(API_URL + "projects/" + projectId, {
-      name: project.name,
-      target: project.target,
-      description: project.description,
-      time_limit_months: project.time_limit_months,
-      cost: project.cost,
-      approved: project.approved
-    }, httpOptions);
+  deleteUserExperience(expId: number) {
+    return this.http.delete(API_URL + "users_experiences/" + expId, {
+    });
+  }
+
+  deleteExperience(expId: number) {
+    return this.http.delete(API_URL + "experiences/" + expId, {
+    });
   }
 }

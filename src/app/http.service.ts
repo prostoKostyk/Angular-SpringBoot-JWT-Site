@@ -33,10 +33,10 @@ export class HttpService {
             return users.map(function f(user: User): object {
                 const obj: object = {
                     id: user.id,
-                    first_name: user.first_name,
+                    firstName: user.firstName,
                     secondName: user.secondName,
                     lastName: user.lastName,
-                    phone_number: user.phone_number,
+                    phoneNumber: user.phoneNumber,
                     email: user.email,
                     password: user.password,
                     userType: user.userType

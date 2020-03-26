@@ -1,8 +1,8 @@
-<div *ngIf="addMode">
-    <div *ngIf="addMode" class="companies__new">
+<div *ngIf="addCompanyMode">
+    <div *ngIf="addCompanyMode" class="companies__new">
         <p>Введите информацию о своей компании:
         </p>
-        <form [formGroup]="form" novalidate>
+        <form [formGroup]="companyForm" novalidate>
             <b class="companies__header">Название компании: </b>
             <div class="companies__item">
                 <input class="companies__input" formControlName="name" />
@@ -17,62 +17,62 @@
             </div>
             <b class="companies__header">Дата основания компании:</b>
             <div class="companies__item">
-                <input type="date" class="companies__input-date" formControlName="foundation_date" />
+                <input type="date" class="companies__input-date" formControlName="foundationDate" />
             </div>
         </form>
         <p>
             <p><button class="companies__button" (click)="addCompany()">Сохранить данные</button>
                 <p></p>Или выберите свою компанию из существующих:
                 <select [(ngModel)]="chosenCompanyId" class="companies__select">
-                    <option *ngFor="let company of companies.content;" value="{{company.id}}">
+                    <option *ngFor="let company of allCompanies.content;" value="{{company.id}}">
                         {{company.form}} {{company.name}}
                     </option>
                 </select>
                 <button class="companies__button left-5" (click)="addExistCompany()">Подтвердить</button>
     </div>
 </div>
-<div class="company" *ngIf="company">
-    <form [formGroup]="form" novalidate>
+<div class="company" *ngIf="userCompany">
+    <form [formGroup]="companyForm" novalidate>
         <p><b class="companies__header">Название компании: </b>
             <div class="companies__item">
-                <div class="companies__view" [ngClass]="{invisible: changeMode}">
-                    {{company.name}}
+                <div class="companies__view" [ngClass]="{invisible: companyChangeMode}">
+                    {{userCompany.name}}
                 </div>
-                <div [ngClass]="{invisible: !changeMode}">
-                    <input class="companies__input" setWidth={{form.value.name}} formControlName="name" />
+                <div [ngClass]="{invisible: !companyChangeMode}">
+                    <input class="companies__input" setWidth={{companyForm.value.name}} formControlName="name" />
                 </div>
             </div>
             <p><b class="companies__header">Организационная форма:</b>
                 <div class="companies__item">
-                    <div class="companies__view" [ngClass]="{invisible: changeMode}">
-                        {{company.form}}
+                    <div class="companies__view" [ngClass]="{invisible: companyChangeMode}">
+                        {{userCompany.form}}
                     </div>
-                    <div [ngClass]="{invisible:!changeMode}">
+                    <div [ngClass]="{invisible: !companyChangeMode}">
                         <input type="text" class="companies__input" formControlName="form" />
                     </div>
                 </div>
                 <p><b class="companies__header">Описание компании:</b>
                     <div class="companies__item">
-                        <div class="companies__view" [ngClass]="{invisible: changeMode}">
-                            {{company.description}}
+                        <div class="companies__view" [ngClass]="{invisible: companyChangeMode}">
+                            {{userCompany.description}}
                         </div>
-                        <div [ngClass]="{invisible: !changeMode}">
+                        <div [ngClass]="{invisible: !companyChangeMode}">
                             <textarea type="text" class="companies__input companies__textarea"
                                 formControlName="description"></textarea>
                         </div>
                     </div>
                     <p><b class="companies__header">Дата основания компании:</b>
                         <div class="companies__item">
-                            <div class="companies__view" [ngClass]="{invisible: changeMode}">
-                                {{formatDate()}}
+                            <div class="companies__view" [ngClass]="{invisible: companyChangeMode}">
+                                {{formatDateMonthToString()}}
                             </div>
-                            <div [ngClass]="{invisible: !changeMode}">
+                            <div [ngClass]="{invisible: !companyChangeMode}">
                                 <input type="date" class="companies__input companies__input-date"
-                                    formControlName="foundation_date">
+                                    formControlName="foundationDate">
                             </div>
                         </div>
     </form>
-    <button [ngClass]="{invisible: changeMode}" class="companies__button" (click)="change()">Редактировать</button>
-    <button [ngClass]="{invisible: !changeMode}" class="companies__button" [disabled]="form.invalid"
+    <button [ngClass]="{invisible: companyChangeMode}" class="companies__button" (click)="change()">Редактировать</button>
+    <button [ngClass]="{invisible: !companyChangeMode}" class="companies__button" [disabled]="companyForm.invalid"
         (click)="save()">Сохранить</button>
 </div>

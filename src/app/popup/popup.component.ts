@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from "@angular/core";
 export class PopupComponent implements OnInit {
 
   @Input() error1: string;
-  @Input() usl: string;
+
   constructor() { }
 
   ngOnInit() {

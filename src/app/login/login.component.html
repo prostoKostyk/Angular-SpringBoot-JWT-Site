@@ -1,14 +1,14 @@
 <div class="login">
   <div class="login__window">
-    <form class="login__form" name="form" #f="ngForm" novalidate>
-      <input class="login__input" type="text" placeholder="Логин" name="username" [(ngModel)]="form.username" required
+    <form class="login__form" name="loginForm" #f="ngForm" novalidate>
+      <input class="login__input" type="text" placeholder="Логин" name="username" [(ngModel)]="loginForm.username" required
         #username="ngModel" />
-      <input class="login__input" type="password" placeholder="Пароль" name="password" [(ngModel)]="form.password"
+      <input class="login__input" type="password" placeholder="Пароль" name="password" [(ngModel)]="loginForm.password"
         required minlength="6" #password="ngModel" />
       <div class="login__mistake" *ngIf="f.submitted && isLoginFailed">
         <app-popup [error1]="errorMessage"></app-popup>
       </div>
-      <button class="login__button"  (click)="login()">Войти</button>
+      <button class="login__button" (click)="login()">Войти</button>
       <p class="login__message">Не зарегистрированы? <a class="login__create" href="/registration">Создать аккаунт</a>
         <p class="login__message">Забыли пароль? <a class="login__create" href="/restore-password"> Воcстановить</a>
         </p>

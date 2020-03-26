@@ -1,23 +1,23 @@
 <div class="registration">
   <form class="registration__form" [formGroup]="form" novalidate *ngIf="!isSuccessful" name="form"
-    (ngSubmit)="onSubmit()" #f="ngForm" novalidate>
+   #f="ngForm" novalidate>
     <input class="registration__input" type="text" name="username" [(ngModel)]="form.username"
       formControlName="username" placeholder="Логин" />
     <div class="form-group">
       <div class="form-group">
-        <input class="registration__input" type="text" name="second_name" placeholder="Фамилия" formControlName="second_name"
-           [(ngModel)]="form.second_name" />
-        <div *ngIf="form.controls['second_name'].invalid && form.controls['second_name'].touched">
+        <input class="registration__input" type="text" name="secondName" placeholder="Фамилия" formControlName="secondName"
+           [(ngModel)]="form.secondName" />
+        <div *ngIf="form.controls['secondName'].invalid && form.controls['secondName'].touched">
           <app-popup [error1]="'Введите фамилию'"></app-popup>
         </div>
-        <input class="registration__input" type="text" name="first_name" placeholder="Имя" formControlName="first_name" 
-          [(ngModel)]="form.first_name" />
-        <div *ngIf="form.controls['first_name'].invalid && form.controls['first_name'].touched">
+        <input class="registration__input" type="text" name="firstName" placeholder="Имя" formControlName="firstName" 
+          [(ngModel)]="form.firstName" />
+        <div *ngIf="form.controls['firstName'].invalid && form.controls['firstName'].touched">
           <app-popup [error1]="'Введите имя'"></app-popup>
         </div>
-        <input class="registration__input" type="text" placeholder="Отчество" formControlName="last_name"
-          name="last_name" [(ngModel)]="form.last_name" />
-        <div *ngIf="form.controls['last_name'].invalid && form.controls['last_name'].touched">
+        <input class="registration__input" type="text" placeholder="Отчество" formControlName="lastName"
+          name="lastName" [(ngModel)]="form.lastName" />
+        <div *ngIf="form.controls['lastName'].invalid && form.controls['lastName'].touched">
           <app-popup [error1]="'Введите отчество'"></app-popup>
         </div>
       </div>
@@ -32,13 +32,13 @@
         <app-popup [error1]="'Введите email'"></app-popup>
       </div>
     </div>
-    <input class="registration__input" type="text" placeholder="Телефонный номер" formControlName="phone_number"
-      name="phone_number" [(ngModel)]="form.phone_number" />
-    <div *ngIf="form.controls['phone_number'].errors && form.controls['phone_number'].touched">
-      <div *ngIf="form.controls['phone_number'].errors.pattern">
+    <input class="registration__input" type="text" placeholder="Телефонный номер" formControlName="phoneNumber"
+      name="phoneNumber" [(ngModel)]="form.phoneNumber" />
+    <div *ngIf="form.controls['phoneNumber'].errors && form.controls['phoneNumber'].touched">
+      <div *ngIf="form.controls['phoneNumber'].errors.pattern">
         <app-popup [error1]="'Введить номер в формате 89051234567'"></app-popup>
       </div>
-      <div *ngIf="form.controls['phone_number'].errors.required">
+      <div *ngIf="form.controls['phoneNumber'].errors.required">
         <app-popup [error1]="'Введите телефонный номер'"></app-popup>
       </div>
     </div>

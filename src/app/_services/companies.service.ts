@@ -1,11 +1,10 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { GlobalVariable } from "../_helpers/variables.service";
 
-const API_URL = "http://localhost:8080/";
-const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" })
-};
+const API_URL = GlobalVariable.API_URL;
+const httpOptions = GlobalVariable.httpOptions;
 
 @Injectable({
   providedIn: "root"
@@ -21,12 +20,16 @@ export class CompaniesService {
     return this.http.get(API_URL + "companies/" + id);
   }
 
+  getUserCompanies(userId): Observable<any> {
+    return this.http.get(API_URL + "users/getcompanies/" + userId);
+  }
+
   setCompany(company, userId) {
     return this.http.put(API_URL + "users/add_company/" + userId, {
       name: company.name,
       form: company.form,
       description: company.description,
-      foundation_date: company.foundation_date
+      foundationDate: company.foundationDate
     }, httpOptions);
   }
 
@@ -36,7 +39,7 @@ export class CompaniesService {
       name: company.name,
       form: company.form,
       description: company.description,
-      foundation_date: company.foundation_date
+      foundationDate: company.foundationDate
     }, httpOptions);
   }
 
@@ -45,7 +48,7 @@ export class CompaniesService {
       name: company.name,
       form: company.form,
       description: company.description,
-      foundation_date: company.foundation_date
+      foundationDate: company.foundationDate
     }, httpOptions);
   }
 }
