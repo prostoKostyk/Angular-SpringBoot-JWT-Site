@@ -28,18 +28,18 @@ export class UserComponent implements OnInit {
               public experienceService: ExperienceService) {
     this.userForm = new FormGroup({
       "username": new FormControl("", [Validators.required]),
-      "firstName": new FormControl("", [Validators.required]),
-      "secondName": new FormControl("", [Validators.required]),
-      "lastName": new FormControl("", [Validators.required]),
+      "firstname": new FormControl("", [Validators.required]),
+      "secondname": new FormControl("", [Validators.required]),
+      "lastname": new FormControl("", [Validators.required]),
       "email": new FormControl("", [Validators.required, Validators.email]),
-      "phoneNumber": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
+      "phonenumber": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
     });
 
     this.experienceForm = new FormGroup({
       "company": new FormControl("", [Validators.required]),
       "position": new FormControl("", [Validators.required]),
-      "beginning_date": new FormControl("", [Validators.required]),
-      "end_date": new FormControl("", [Validators.required]),
+      "beginningdate": new FormControl("2010-01-01", [Validators.required]),
+      "enddate": new FormControl("2020-01-01", [Validators.required]),
       "experience_months": new FormControl(1, [Validators.required]),
     });
   }
@@ -51,7 +51,7 @@ export class UserComponent implements OnInit {
         userData => {
           this.user = userData;
           this.userExperience = this.user.experience;
-          this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
+          this.userExperience.sort((a, b) => a.enddate > b.enddate ? -1 : 1);
         }
       );
     }
@@ -63,7 +63,7 @@ export class UserComponent implements OnInit {
         this.userService.getUser(this.curentUserId).subscribe(
           data2 => {
             this.user = data2;
-            this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
+            this.userExperience.sort((a, b) => a.enddate > b.enddate ? -1 : 1);
           }
         );
       }
@@ -79,8 +79,8 @@ export class UserComponent implements OnInit {
     this.userChangeMode = !this.userChangeMode;
     this.userForm.setValue({
       username: this.user.username,
-      secondName: this.user.secondName, firstName: this.user.firstName,
-      lastName: this.user.lastName, email: this.user.email, phoneNumber: this.user.phoneNumber
+      secondname: this.user.secondname, firstname: this.user.firstname,
+      lastname: this.user.lastname, email: this.user.email, phonenumber: this.user.phonenumber
     });
   }
 
@@ -91,7 +91,7 @@ export class UserComponent implements OnInit {
           userData => {
             this.user = userData;
             this.userExperience = this.user.experience;
-            this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
+            this.userExperience.sort((a, b) => a.enddate > b.enddate ? -1 : 1);
           });
       });
     this.addExperienceMode = !this.addExperienceMode;
@@ -106,7 +106,7 @@ export class UserComponent implements OnInit {
               userData => {
                 this.user = userData;
                 this.userExperience = this.user.experience;
-                this.userExperience.sort((a, b) => a.end_date > b.end_date ? -1 : 1);
+                this.userExperience.sort((a, b) => a.enddate > b.enddate ? -1 : 1);
               });
           });
       });
@@ -127,7 +127,7 @@ export class UserComponent implements OnInit {
     return ddmmyyyy;
   }
 
-  getExperienceMonth(beginning_date, end_date) {
-    return Math.floor(((new Date(end_date)).getTime() - (new Date(beginning_date)).getTime()) / 1000 / 60 / 60 / 24 / 30);
+  getExperienceMonth(beginningdate, enddate) {
+    return Math.floor(((new Date(enddate)).getTime() - (new Date(beginningdate)).getTime()) / 1000 / 60 / 60 / 24 / 30);
   }
 }

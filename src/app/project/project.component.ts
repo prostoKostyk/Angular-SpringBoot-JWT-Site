@@ -67,7 +67,7 @@ export class ProjectComponent implements OnInit {
         if (project.id.toString() === this.projectid) {
           this.usersInProject.push({
             id: user.id,
-            name: user.secondName + " " + user.firstName + " " + user.lastName
+            name: user.secondname + " " + user.firstname + " " + user.lastname
           });
           break;
         }

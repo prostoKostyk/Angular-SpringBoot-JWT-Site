@@ -23,10 +23,10 @@ export class UserService {
   edit(user, id): Observable<any> {
     return this.http.put(API_URL + "users/" + id, {
       username: user.username,
-      firstName: user.firstName,
-      secondName: user.secondName,
-      lastName: user.lastName,
-      phoneNumber: user.phoneNumber,
+      firstname: user.firstname,
+      secondname: user.secondname,
+      lastname: user.lastname,
+      phonenumber: user.phonenumber,
       email: user.email,
     }, httpOptions);
   }

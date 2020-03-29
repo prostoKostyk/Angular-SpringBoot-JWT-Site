@@ -20,11 +20,11 @@ export class RegistrationComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {
     this.form = new FormGroup({
       "username": new FormControl("", []),
-      "firstName": new FormControl("", [Validators.required]),
-      "secondName": new FormControl("", [Validators.required]),
-      "lastName": new FormControl("", [Validators.required]),
+      "firstname": new FormControl("", [Validators.required]),
+      "secondname": new FormControl("", [Validators.required]),
+      "lastname": new FormControl("", [Validators.required]),
       "email": new FormControl("", [Validators.required, Validators.email]),
-      "phoneNumber": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
+      "phonenumber": new FormControl("", [Validators.required, Validators.pattern("[0-9]{11}")]),
       PasswordsForm: new FormGroup({
         "password": new FormControl("", [Validators.required, Validators.min(8)]),
         "passwordConfirm": new FormControl("", [Validators.required])

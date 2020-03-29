@@ -51,7 +51,7 @@ export class UserProjectsComponent implements OnInit {
     this.newProjectForm = new FormGroup({
       "name": new FormControl("", [Validators.required]),
       "cost": new FormControl("", [Validators.required]),
-      "time_limit_months": new FormControl("", [Validators.required]),
+      "timelimitmonths": new FormControl("", [Validators.required]),
       "target": new FormControl("", [Validators.required]),
       "description": new FormControl("", [Validators.required]),
     });
@@ -92,6 +92,7 @@ export class UserProjectsComponent implements OnInit {
   getPaginProjects() {
     this.projectService.getFindProjectsByUser(this.currentPage, this.pageSize, "name", this.curentUserId).subscribe(
       projectData => {
+        console.log(projectData);
         for (const project of projectData.content) {
           this.projects.push(project);
           this.getUsersInProject(project.id);
@@ -124,9 +125,9 @@ export class UserProjectsComponent implements OnInit {
       for (const user of userData.content) {
         this.usersInCompany.push(
           {id: user.id,
-           firstName: user.firstName,
-           secondName: user.secondName,
-           lastName: user.lastName,
+           firstname: user.firstname,
+           secondname: user.secondname,
+           lastname: user.lastname,
         });
       }
     });
@@ -201,7 +202,7 @@ export class UserProjectsComponent implements OnInit {
     this.newProjectForm.setValue({
       name: "",
       cost: "",
-      time_limit_months: "",
+      timelimitmonths: "",
       target: "",
       description: ""
     });
@@ -231,7 +232,7 @@ export class UserProjectsComponent implements OnInit {
       if (user.id === +this.addUserId) {
         this.usersToProject.push({
           id: user.id,
-          name: user.secondName + " " + user.firstName + " " + user.lastName
+          name: user.secondname + " " + user.firstname + " " + user.lastname
         });
         break;
       }
@@ -256,7 +257,7 @@ export class UserProjectsComponent implements OnInit {
         this.newProjectForm.setValue({
           name: project.name,
           cost: project.cost,
-          time_limit_months: project.time_limit_months,
+          timelimitmonths: project.timelimitmonths,
           target: project.target,
           description: project.description
         });

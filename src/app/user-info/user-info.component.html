@@ -11,14 +11,14 @@
                 <p></p><b class="user__header">ФИО:</b>
             </div>
             <div class="user__view" [ngClass]="{invisible: userChangeMode}">
-                {{user.secondName}} {{user.firstName}} {{user.lastName}}
+                {{user.secondname}} {{user.firstname}} {{user.lastname}}
             </div>
         </div>
         <div class="user__item">
             <div>
                 <p></p><b class="user__header">Телефонный номер:</b>
             </div>
-            <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.phoneNumber}}
+            <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.phonenumber}}
             </div>
         </div>
         <div class="user__item">
@@ -45,8 +45,8 @@
                     <td class="user__experience-td user__experience-numb">{{i+1}}</td>
                     <td class="user__experience-td">{{experience.company}}</td>
                     <td class="user__experience-td">{{experience.position}}</td>
-                    <td class="user__experience-td width-7">{{dateConvert(experience.beginning_date)}}</td>
-                    <td class="user__experience-td width-7">{{dateConvert(experience.end_date)}}</td>
+                    <td class="user__experience-td width-7">{{dateConvert(experience.beginningdate)}}</td>
+                    <td class="user__experience-td width-7">{{dateConvert(experience.enddate)}}</td>
                     <td class="user__experience-td width-7">{{experience.experience_months}} месяцев</td>
             </tr>
         </tbody>

@@ -15,17 +15,17 @@
                 <p></p><b class="user__header">ФИО:</b>
             </div>
             <div class="user__view" [ngClass]="{invisible: userChangeMode}">
-                {{user.secondName}} {{user.firstName}} {{user.lastName}}
+                {{user.secondname}} {{user.firstname}} {{user.lastname}}
             </div>
             <div class="user__change" [ngClass]="{invisible: !userChangeMode}">
-                <input class="user__change-field" setWidth={{userForm.value.secondName}}
-                    formControlName="secondName" />
-                <input class="user__change-field" setWidth={{userForm.value.firstName}} formControlName="firstName" />
-                <input class="user__change-field" setWidth={{userForm.value.lastName}} formControlName="lastName" />
-                <div class="user__error" *ngIf="userForm.controls['secondName'].invalid">Введите фамилию
+                <input class="user__change-field" setWidth={{userForm.value.secondname}}
+                    formControlName="secondname" />
+                <input class="user__change-field" setWidth={{userForm.value.firstname}} formControlName="firstname" />
+                <input class="user__change-field" setWidth={{userForm.value.lastname}} formControlName="lastname" />
+                <div class="user__error" *ngIf="userForm.controls['secondname'].invalid">Введите фамилию
                 </div>
-                <div class="user__error" *ngIf="userForm.controls['firstName'].invalid">Введите имя</div>
-                <div class="user__error" *ngIf="userForm.controls['lastName'].invalid">Введите отчество
+                <div class="user__error" *ngIf="userForm.controls['firstname'].invalid">Введите имя</div>
+                <div class="user__error" *ngIf="userForm.controls['lastname'].invalid">Введите отчество
                 </div>
             </div>
         </div>
@@ -33,16 +33,16 @@
             <div>
                 <p></p><b class="user__header">Телефонный номер:</b>
             </div>
-            <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.phoneNumber}}
+            <div class="user__view" [ngClass]="{invisible: userChangeMode}">{{user.phonenumber}}
             </div>
             <div class="user__change" [ngClass]="{invisible: !userChangeMode}">
-                <input class="user__change-field" setWidth={{userForm.value.phoneNumber}}
-                    formControlName="phoneNumber" />
-                <div *ngIf="userForm.controls['phoneNumber'].errors">
-                    <div class="user__error" *ngIf="userForm.controls['phoneNumber'].errors.pattern">Введить номер в
+                <input class="user__change-field" setWidth={{userForm.value.phonenumber}}
+                    formControlName="phonenumber" />
+                <div *ngIf="userForm.controls['phonenumber'].errors">
+                    <div class="user__error" *ngIf="userForm.controls['phonenumber'].errors.pattern">Введить номер в
                         формате
                         89051234567</div>
-                    <div class="user__error" *ngIf="userForm.controls['phoneNumber'].errors.required">Введите
+                    <div class="user__error" *ngIf="userForm.controls['phonenumber'].errors.required">Введите
                         телефонный
                         номер</div>
                 </div>
@@ -89,11 +89,11 @@
             </div>
             <div class="user__addExp-item left-2">
                 <p><label>Начало работы</label></p>
-                <input type="date" class="user__addExp-date" formControlName="beginning_date" />
+                <input type="date" class="user__addExp-date" formControlName="beginningdate" />
             </div>
             <div class="user__addExp-item left-2">
                 <p><label>Окончание</label></p>
-                <input type="date" class="user__addExp-date" formControlName="end_date" />
+                <input type="date" class="user__addExp-date" formControlName="enddate" />
             </div>
             <button class="user__addExp-button" (click)="addExperience()">Добавить</button>
         </form>
@@ -113,10 +113,10 @@
                         <td class="user__experience-td user__experience-numb">{{i+1}}</td>
                         <td class="user__experience-td">{{experience.company}}</td>
                         <td class="user__experience-td">{{experience.position}}</td>
-                        <td class="user__experience-td width-7">{{dateConvert(experience.beginning_date)}}</td>
-                        <td class="user__experience-td width-7">{{dateConvert(experience.end_date)}}</td>
+                        <td class="user__experience-td width-7">{{dateConvert(experience.beginningdate)}}</td>
+                        <td class="user__experience-td width-7">{{dateConvert(experience.enddate)}}</td>
                         <td class="user__experience-td width-7">
-                            {{getExperienceMonth(experience.beginning_date, experience.end_date)}} месяцев</td>
+                            {{getExperienceMonth(experience.beginningdate, experience.enddate)}} месяцев</td>
                         <td class="user__experience-td width-7"><button class="user__delete-button"
                                 (click)="deleteExperience(experience.id)">Удалить</button></td>
                     </tr>

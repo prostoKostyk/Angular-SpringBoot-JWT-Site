@@ -20,7 +20,7 @@ export class ProjectsService {
   }
 
   getUserProject(userId): Observable<any> {
-    return this.http.get(API_URL + "users/getProjects/" + userId);
+    return this.http.get(API_URL + "users/getprojects/" + userId);
   }
 
   getPaginateProjects(pageNo: number, pageSize: number, sortBy: string): Observable<any> {
@@ -58,7 +58,7 @@ export class ProjectsService {
       name: project.name,
       target: project.target,
       description: project.description,
-      time_limit_months: project.time_limit_months,
+      timelimitmonths: project.timelimitmonths,
       cost: project.cost,
       approved: false,
     }, httpOptions);
@@ -70,7 +70,7 @@ export class ProjectsService {
       name: project.name,
       target: project.target,
       description: project.description,
-      time_limit_months: project.time_limit_months,
+      timelimitmonths: project.timelimitmonths,
       cost: project.cost,
       approved: project.approved,
     }, httpOptions);
@@ -81,7 +81,7 @@ export class ProjectsService {
       name: project.name,
       target: project.target,
       description: project.description,
-      time_limit_months: project.time_limit_months,
+      timelimitmonths: project.timelimitmonths,
       cost: project.cost,
       approved: project.approved
     }, httpOptions);

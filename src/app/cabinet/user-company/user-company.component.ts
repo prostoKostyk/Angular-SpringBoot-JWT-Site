@@ -45,6 +45,10 @@ export class UserCompanyComponent implements OnInit {
       this.companiesService.getUserCompanies(this.curentUserId).subscribe(
         companyData => {
           this.userCompany = companyData[0];
+          console.log(this.userCompany);
+          if (!this.userCompany) {
+            this.addCompanyMode = true;
+          }
         }
       );
     }

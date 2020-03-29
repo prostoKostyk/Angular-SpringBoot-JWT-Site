@@ -1,5 +1,5 @@
 <div *ngIf="addCompanyMode">
-    <div *ngIf="addCompanyMode" class="companies__new">
+    <div class="companies__new">
         <p>Введите информацию о своей компании:
         </p>
         <form [formGroup]="companyForm" novalidate>
@@ -29,9 +29,9 @@
                     </option>
                 </select>
                 <button class="companies__button left-5" (click)="addExistCompany()">Подтвердить</button>
-    </div>
 </div>
-<div class="company" *ngIf="userCompany">
+</div>
+<div class="company" *ngIf="userCompany && !addCompanyMode">
     <form [formGroup]="companyForm" novalidate>
         <p><b class="companies__header">Название компании: </b>
             <div class="companies__item">

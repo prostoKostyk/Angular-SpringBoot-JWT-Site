@@ -15,7 +15,7 @@
                     </div>
                     <p><b class="projects__header">Время на реализацию:</b>
                         <div class="projects__item">
-                            <input type="number" class="projects__input" formControlName="time_limit_months" />
+                            <input type="number" class="projects__input" formControlName="timelimitmonths" />
                             месяцев
                         </div>
                         <p><b class="projects__header">Цель проекта:</b>
@@ -33,7 +33,7 @@
         <p><b class="projects__header">Добавить участников проекта: </b>
             <select [(ngModel)]="addUserId" *ngIf="usersInCompany" class="project__users">
                 <option *ngFor="let user of usersInCompany" value="{{user.id}}">
-                    {{user.secondName + ' ' + user.firstName + ' ' + user.lastName}}
+                    {{user.secondname + ' ' + user.firstname + ' ' + user.lastname}}
                 </option>
             </select>
             <button class="projects__button left-50" (click)="addUserToProject()">Добавить</button>
@@ -104,11 +104,11 @@
                                     <div class="projects__item">
                                         <div class="projects__view"
                                             [ngClass]="{invisible: projectChangeId == project.id}">
-                                            {{project.time_limit_months}} месяцев
+                                            {{project.timelimitmonths}} месяцев
                                         </div>
                                         <div [ngClass]="{invisible: projectChangeId != project.id}">
                                             <input type="number" class="projects__input"
-                                                formControlName="time_limit_months" />
+                                                formControlName="timelimitmonths" />
                                             месяцев
                                         </div>
                                     </div>

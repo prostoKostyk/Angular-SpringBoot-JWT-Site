@@ -25,8 +25,8 @@ export class ExperienceService {
     return this.http.put(API_URL + "users/add_experience/" + userId, {
       company: experience.company,
       position: experience.position,
-      beginning_date: experience.beginning_date,
-      end_date: experience.end_date,
+      beginningdate: experience.beginningdate,
+      enddate: experience.enddate,
       experience_months: experience.experience_months
     }, httpOptions);
   }
