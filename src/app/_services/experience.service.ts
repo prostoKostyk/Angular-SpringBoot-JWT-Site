@@ -27,7 +27,7 @@ export class ExperienceService {
       position: experience.position,
       beginningdate: experience.beginningdate,
       enddate: experience.enddate,
-      experience_months: experience.experience_months
+      experience_months: experience.experiencemonths
     }, httpOptions);
   }
 
