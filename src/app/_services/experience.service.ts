@@ -13,29 +13,33 @@ export class ExperienceService {
 
   constructor(private http: HttpClient) { }
 
-  getExperiences(): Observable<any> {
-    return this.http.get(API_URL + "experiences");
+  /**
+   * Метод для отправки запроса для получения всех записей опыта
+   * работы пользователя
+   */
+  getUserExperiences(userId: number): Observable<any> {
+    return this.http.get(API_URL + "experience_user/" + userId);
   }
 
-  getExperience(id): Observable<any> {
-    return this.http.get(API_URL + "experiences/" + id);
-  }
-
-  addExperience(experience, userId) {
-    return this.http.put(API_URL + "users/add_experience/" + userId, {
+  /**
+   * Метод для отправки запроса для добавления записи опыта
+   * работы пользователя
+   */
+  addExperience(experience, currentUser) {
+    return this.http.post(API_URL + "experiences", {
       company: experience.company,
       position: experience.position,
       beginningdate: experience.beginningdate,
       enddate: experience.enddate,
-      experience_months: experience.experiencemonths
+      experience_months: experience.experiencemonths,
+      user: currentUser
     }, httpOptions);
   }
 
-  deleteUserExperience(expId: number) {
-    return this.http.delete(API_URL + "users_experiences/" + expId, {
-    });
-  }
-
+  /**
+   * Метод для отправки запроса для удаления записи опыта
+   * работы пользователя
+   */
   deleteExperience(expId: number) {
     return this.http.delete(API_URL + "experiences/" + expId, {
     });

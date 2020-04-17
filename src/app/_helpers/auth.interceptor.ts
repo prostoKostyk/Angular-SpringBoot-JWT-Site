@@ -9,6 +9,9 @@ const TOKEN_HEADER_KEY = "Authorization";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private token: TokenStorageService) { }
+  /**
+   * Метод для добавления токена в запросы
+   */
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const token = this.token.getToken();
     if (token != null) {

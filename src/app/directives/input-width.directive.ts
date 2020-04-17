@@ -7,10 +7,10 @@ export class InputWidthDirective implements OnChanges  {
  @Input("setWidth") word;
  constructor(private el: ElementRef) { }
  @HostListener("change") ngOnChanges(): void {
-  if (this.word.length < 2) {
-    this.setWidth(15);
+  if (this.word.length < 3) {
+    this.setWidth(40);
    } else {
-   this.setWidth(this.word.length * 10.8);
+   this.setWidth(this.word.length * 11.2);
    }
  }
 

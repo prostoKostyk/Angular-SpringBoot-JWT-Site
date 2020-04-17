@@ -12,14 +12,24 @@ const httpOptions = GlobalVariable.httpOptions;
 export class UserService {
 
   constructor(private http: HttpClient) { }
+
+  /**
+   * Метод для отправки запроса для получения всех пользователей
+   */
   getUsers(): Observable<any> {
     return this.http.get(API_URL + "users" );
   }
 
+  /**
+   * Метод для отправки запроса для получения пользователя
+   */
   getUser(id): Observable<any> {
     return this.http.get(API_URL + "user/" + id);
   }
 
+  /**
+   * Метод для отправки запроса для изменения пользователя
+   */
   edit(user, id): Observable<any> {
     return this.http.put(API_URL + "users/" + id, {
       username: user.username,
@@ -31,19 +41,17 @@ export class UserService {
     }, httpOptions);
   }
 
+  /**
+   * Метод для отправки запроса для получения пользователей с указанным проектом
+   */
   getFindByProject(projectId: number): Observable<any> {
     return this.http.get(API_URL + "findusersbyproject/" + projectId);
   }
 
+  /**
+   * Метод для отправки запроса для получения пользователей с указанной компанией
+   */
   getFindByCompany(companyId: number): Observable<any> {
     return this.http.get(API_URL + "findusersbycompany/" + companyId);
-  }
-
-  getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + "user", { responseType: "text" });
-  }
-
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + "admin", { responseType: "text" });
   }
 }
