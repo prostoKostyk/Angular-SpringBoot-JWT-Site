@@ -8,7 +8,7 @@
                 </select>
             </div>
             <div *ngIf="userAdmin">
-                <select class="project__sorting left-5" (change)="group(true)" [(ngModel)]="onlyNotApproved">
+                <select class="project__sorting left-5" (change)="groupByApprove(true)" [(ngModel)]="approvedSelectValue">
                     <option value="1">Все проекты</option>
                     <option value="2">Только одобренные проекты </option>
                     <option value="3">Только проекты на рассмотрении</option>
@@ -27,7 +27,7 @@
             </div>
         </div>
         
-        <div *ngIf="findedProjectsLength === 0 && groupedProjectsLength === 0">
+        <div *ngIf="findedProjectsLength === 0">
             <div *ngFor="let i = index; let project of showingProjects;">
                 <div class="projects__item" [ngClass]="{'left-yellow': !project.approved}"
                     [routerLink]="['project', project.id]">{{project.name}}
@@ -36,13 +36,6 @@
         </div>
         <div *ngIf="findedProjectsLength > 0">
             <div *ngFor="let i = index; let project of findedProjects;">
-                <div class="projects__item" [ngClass]="{'left-yellow': !project.approved}"
-                    [routerLink]="['project', project.id]">{{project.name}}
-                </div>
-            </div>
-        </div>
-        <div *ngIf="groupedProjectsLength > 0">
-            <div *ngFor="let i = index; let project of groupedProjects;">
                 <div class="projects__item" [ngClass]="{'left-yellow': !project.approved}"
                     [routerLink]="['project', project.id]">{{project.name}}
                 </div>

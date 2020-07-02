@@ -12,22 +12,14 @@ import { UserService } from "../../_services/user.service";
 })
 
 export class ProjectsComponent extends UserProjectsComponent implements OnInit {
-
-  userId: number;
   userAdmin = false;
 
   findedProjects = [];
   findedProjectsLength = 0;
 
-  groupedProjects = [];
-  groupedProjectsLength = 0;
+  showingProjects = [];
+  showingProjectsLength = 0;
 
-  sortingValue = "name";
-  onlyNotApproved = "1";
-
-  currentPage = 0;
-  currentPageAll = 0;
-  projectsLength = 0;
   pageSize = 10;
 
   constructor(public tokenStorage: TokenStorageService, public projectsService: ProjectsService,
@@ -37,8 +29,8 @@ export class ProjectsComponent extends UserProjectsComponent implements OnInit {
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
-      this.userId = this.tokenStorage.getUser().id;
-      this.userService.getUser(this.userId).subscribe(
+      this.curentUserId = this.tokenStorage.getUser().id;
+      this.userService.getUser(this.curentUserId).subscribe(
         userData => {
           this.curentUser = userData;
           for (const role of this.curentUser.roles) {
@@ -46,57 +38,53 @@ export class ProjectsComponent extends UserProjectsComponent implements OnInit {
               this.userAdmin = true;
             }
           }
-          this.getPaginateProjects(this.currentPage, this.pageSize, this.sortingValue, this.userAdmin);
+          this.getPaginateProjects();
         }
       );
     } else {
-      this.getPaginateProjects(this.currentPage, this.pageSize, this.sortingValue, this.userAdmin);
+      this.getPaginateProjects();
     }
   }
 
   /**
-   * Метод для вызова метода getPaginProjects при скролле
+   * Метод для вызова метода getPaginateProjects при скролле
    */
   @HostListener("window:scroll", [])
   onScroll(): void {
-    if (((window.innerHeight + window.scrollY * 1.1) >= document.body.scrollHeight)) {
-      if (this.currentPage + 1 < this.projectsLength / this.pageSize) {
-        this.currentPage++;
-        if (this.searchMessage === "" && this.onlyNotApproved === "1") {
-          this.getPaginateProjects(this.currentPage, this.pageSize, this.sortingValue, this.userAdmin);
-          this.currentPageAll = this.currentPage;
-        } else if (this.searchMessage !== "" && this.onlyNotApproved === "1") {
-          this.findProjects(false);
-        } else if (this.onlyNotApproved !== "1") {
-          this.group(false);
-        }
-      }
-    }
+    this.paginLoad();
   }
 
   /**
    * Метод для получения пагинированного списка пользователей и их добавления
    * в массив загруженных до этого пользователей
    */
-  getPaginateProjects(pageNo: number, pageSize: number, sortBy: string, admin?: boolean) {
+  getPaginateProjects() {
     // если пользователь не администатор или не авторизирован получаем только одобренные проекты
-    if (!admin) {
-    this.projectService.getFindProjectsByApproved(pageNo, pageSize, sortBy, true).subscribe(
+    if (!this.userAdmin) {
+    this.projectService.getFindProjectsByApproved(this.currentPage, this.pageSize, this.sortingValue, true).subscribe(
       projectData => {
         for (const project of projectData.content) {
-          this.showingProjects.push(project);
+          if (!this.projects.includes(project)) {
+            this.projects.push(project);
+          }
         }
+        this.showingProjects = this.projects;
         this.projectsLength = projectData.totalElements;
+        this.showingProjectsLength = this.projectsLength;
       }
     );
     // если пользователь администатор получаем все проекты
     } else {
-      this.projectService.getPaginateProjects(pageNo, pageSize, sortBy).subscribe(
+      this.projectService.getPaginateProjects(this.currentPage, this.pageSize, this.sortingValue).subscribe(
         projectData => {
           for (const project of projectData.content) {
-            this.showingProjects.push(project);
+            if (!this.projects.includes(project)) {
+              this.projects.push(project);
+            }
           }
+          this.showingProjects = this.projects;
           this.projectsLength = projectData.totalElements;
+          this.showingProjectsLength = this.projectsLength;
         }
       );
     }
@@ -112,7 +100,7 @@ export class ProjectsComponent extends UserProjectsComponent implements OnInit {
       this.findedProjects = [];
       this.findedProjectsLength = 0;
     }
-    if (this.userAdmin && this.onlyNotApproved === "1") {
+    if (this.userAdmin && this.approvedSelectValue === "1") {
       this.projectService.getFindProjectsByName(this.currentPage, this.pageSize, this.sortingValue, this.searchWord)
         .subscribe(
           projectData => {
@@ -153,30 +141,30 @@ export class ProjectsComponent extends UserProjectsComponent implements OnInit {
   /**
    * Метод для фильтрации проектов по approved
    */
-  group(click: boolean) {
+  groupByApprove(click: boolean) {
     let onlyNotApproved: boolean;
     if (click) {
       this.cancelSearch();
       this.currentPage = 0;
-      this.groupedProjects = [];
-      this.groupedProjectsLength = 0;
+      this.showingProjects = [];
+      this.showingProjectsLength = 0;
     }
-    if (this.onlyNotApproved === "1") {
+    if (this.approvedSelectValue === "1") {
       this.cancelGroup();
       return;
     }
-    if (this.onlyNotApproved === "2") {
+    if (this.approvedSelectValue === "2") {
       onlyNotApproved = true;
-    } else if (this.onlyNotApproved === "3") {
+    } else if (this.approvedSelectValue === "3") {
       onlyNotApproved = false;
     }
-    this.projectService.getFindProjectsByApproved(this.currentPage, this.pageSize, this.sortingValue, onlyNotApproved)
-      .subscribe(
+    this.projectService.getFindProjectsByApproved(this.currentPage, this.pageSize,
+                                                  this.sortingValue, onlyNotApproved).subscribe(
         projectData => {
           for (const project of projectData.content) {
-            this.groupedProjects.push(project);
+            this.showingProjects.push(project);
           }
-          this.groupedProjectsLength = projectData.totalElements;
+          this.showingProjectsLength = projectData.totalElements;
         }
       );
   }
@@ -185,7 +173,7 @@ export class ProjectsComponent extends UserProjectsComponent implements OnInit {
    * Метод для отмены поиска проектов
    */
   cancelSearch(): void {
-    this.currentPage = this.currentPageAll;
+    this.currentPage = this.projectsCurrentPage;
     this.searchMessage = "";
     this.searchWord = "";
     this.findedProjects = [];
@@ -196,18 +184,18 @@ export class ProjectsComponent extends UserProjectsComponent implements OnInit {
    * Метод для отмены фильтрации проектов по approved
    */
   cancelGroup() {
-    this.currentPage = this.currentPageAll;
-    this.onlyNotApproved = "1";
-    this.groupedProjects = [];
-    this.groupedProjectsLength = 0;
+    this.currentPage = this.projectsCurrentPage;
+    this.approvedSelectValue = "1";
+    this.showingProjects = this.projects;
+    this.showingProjectsLength = this.projectsLength;
   }
 
   /**
    * Метод для получения отсортированного списка проектов
    */
   sortChange() {
-    this.currentPage = this.currentPageAll;
+    this.currentPage = this.projectsCurrentPage;
     this.showingProjects = [];
-    this.getPaginateProjects(this.currentPage, this.pageSize, this.sortingValue, this.userAdmin);
+    this.getPaginateProjects();
   }
 }
